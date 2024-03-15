@@ -415,6 +415,7 @@ function RestaurantPage({ login, setlogin }) {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
+        setIsOpen1(false);
         toast({
           title: "Table booked successfully",
           status: "success",
@@ -778,7 +779,7 @@ function RestaurantPage({ login, setlogin }) {
   const handleSubmit = async (event) => {
     console.log(amount);
     event.preventDefault();
-
+    setIsOpen2(false);
     // let restaurantId = 210612;
     try {
       const res = await loadScript(
@@ -827,8 +828,13 @@ function RestaurantPage({ login, setlogin }) {
       });
       console.log("hello");
       console.log(data);
+      // pay now wala popup band krna aur succesful payment wala popup kholna hai
+      setIsOpen5(true);
+
     } catch (error) {
       console.log(error);
+      //payment failed ka popup
+      setIsOpen6(true);
     }
   }
   //copy link
@@ -1668,7 +1674,7 @@ function RestaurantPage({ login, setlogin }) {
         )}
       </div>
 
-      {/* pay a bill popup */}
+      {/* pay a bill popup isOpen2 */}
       <div className="">
         {isOpen2 && userData && (
           <div>
@@ -1762,9 +1768,9 @@ function RestaurantPage({ login, setlogin }) {
           </div>
         )}
       </div>
-      {/* 
-       paymentsuccesful popup */}
 
+      {/* 
+       paymentsuccesful popup  - is Open5*/}
       <div className="">
         {isOpen5 && userData && (
           <div>
@@ -1862,7 +1868,7 @@ function RestaurantPage({ login, setlogin }) {
         )}
       </div>
 
-      {/* popup failed */}
+      {/* popup failed isOpen6 */}
       <div className="">
         {isOpen6 && userData && (
           <div>
@@ -2208,3 +2214,4 @@ function RestaurantPage({ login, setlogin }) {
 }
 
 export default RestaurantPage;
+
