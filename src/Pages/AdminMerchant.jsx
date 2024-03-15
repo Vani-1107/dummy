@@ -176,7 +176,8 @@ function AdminMerchant() {
             console.log("form data : ", formData);
             console.log("geolocation ", latitude, " ", longitude);
             console.log("pic : ", pic);
-
+            formData.pic = pic;
+            formData.logo = logo;
             console.log("logo : ", logo);
             formData.pic=pic;
             formData.logo=logo;
