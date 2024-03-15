@@ -41,6 +41,7 @@ import "react-phone-input-2/lib/style.css";
 import { auth } from "../firebase.config";
 import { IoClose } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
+import allStudent from "../assets/allstudent.png";
 
 const datanew = [
   {
@@ -734,7 +735,7 @@ function RestaurantPage({ login, setlogin }) {
     document.getElementById("background").style.filter = "blur(0px)";
   };
 
-  useEffect(() => {}, [
+  useEffect(() => { }, [
     isOpen,
     isOpen1,
     isOpen4,
@@ -801,7 +802,7 @@ function RestaurantPage({ login, setlogin }) {
         image: chat,
         handler: function (response) {
           console.log(response);
-          verifypayment({ ...response, id,userId, amount });
+          verifypayment({ ...response, id, userId, amount });
         },
       };
       console.log("hello");
@@ -813,7 +814,7 @@ function RestaurantPage({ login, setlogin }) {
         console.log(response.error);
       });
       setAmount("");
-    } catch (error) {}
+    } catch (error) { }
   };
 
   async function verifypayment(bodydata) {
@@ -1018,7 +1019,7 @@ function RestaurantPage({ login, setlogin }) {
   };
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       {/* login */}
       <div className={`absolute w-full h-[95vh] top-[65px]`}>
         {login && (
@@ -1312,9 +1313,8 @@ function RestaurantPage({ login, setlogin }) {
                 <div className="chow-button flex flex-row justify-center gap-2">
                   <div className="btn-1  border-2 rounded-md ">
                     <button
-                      className={` flex px-4 py-2 ${
-                        isButtonClicked1 ? "bg-yellow-500 " : ""
-                      }`}
+                      className={` flex px-4 py-2 ${isButtonClicked1 ? "bg-yellow-500 " : ""
+                        }`}
                       onClick={handleRecommendClick}
                     >
                       <div className="-ml-2 py-1">
@@ -1326,9 +1326,8 @@ function RestaurantPage({ login, setlogin }) {
                   <div className="btn2   border-2 rounded-md ">
                     {" "}
                     <button
-                      className={` flex px-4 py-2 ${
-                        isButtonClicked ? "bg-yellow-500 " : ""
-                      }`}
+                      className={` flex px-4 py-2 ${isButtonClicked ? "bg-yellow-500 " : ""
+                        }`}
                       onClick={handleNotRecommendClick}
                     >
                       <div className="-ml-1 py-1">
@@ -1377,9 +1376,8 @@ function RestaurantPage({ login, setlogin }) {
                           </div>
                           <div>
                             <button
-                              className={`border-2 text-sm px-2 flex py-2 rounded-lg ${
-                                buttonStates[index] ? "bg-yellow-500" : ""
-                              }`}
+                              className={`border-2 text-sm px-2 flex py-2 rounded-lg ${buttonStates[index] ? "bg-yellow-500" : ""
+                                }`}
                               onClick={() =>
                                 handleRecommendationsClick(data._id)
                               }
@@ -1537,11 +1535,10 @@ function RestaurantPage({ login, setlogin }) {
                       {weekDates.map((day) => (
                         <div
                           key={day.date}
-                          className={`calendar-day border-2 rounded-xl cursor-pointer py-2 ${
-                            selectedDate === day.fullDate
-                              ? "border border-yellow-500"
-                              : "bg-white"
-                          }`}
+                          className={`calendar-day border-2 rounded-xl cursor-pointer py-2 ${selectedDate === day.fullDate
+                            ? "border border-yellow-500"
+                            : "bg-white"
+                            }`}
                           // className="calendar-day border-2  rounded-xl py-2 cursor-pointer"
 
                           onClick={() => {
@@ -1572,11 +1569,10 @@ function RestaurantPage({ login, setlogin }) {
                           //className="border-2 text-lg px-4 py-2 ml-1 rounded-lg cursor-pointer"
                           className={`
                           border-2 text-lg px-4 py-2 ml-1 rounded-lg cursor-pointer
-                          ${
-                            index == selectedHourIndex
+                          ${index == selectedHourIndex
                               ? "border border-yellow-500 "
                               : ""
-                          }
+                            }
                         `}
                           key={index}
                           style={style}
@@ -1600,11 +1596,10 @@ function RestaurantPage({ login, setlogin }) {
                         //className="px-6 text-xl font-bold border-2 rounded-lg ml-2 py-4 cursor-pointer hover:bg-gray-200  selectable"
                         className={`
                         px-6 text-xl font-bold border-2 rounded-lg ml-2 py-4 cursor-pointer
-                        ${
-                          number === selectedNumber
+                        ${number === selectedNumber
                             ? "border border-yellow-500"
                             : ""
-                        }  // Conditional background color
+                          }  // Conditional background color
                       `}
                         key={number}
                         onClick={() => {
@@ -1621,9 +1616,8 @@ function RestaurantPage({ login, setlogin }) {
                 <div className="flex flex-row pb-4 ">
                   <ul className="flex flex-row items-center px-6">
                     <li
-                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${
-                        isButtonClicked2 ? "border border-yellow-500 " : ""
-                      }`}
+                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${isButtonClicked2 ? "border border-yellow-500 " : ""
+                        }`}
                       onClick={() => {
                         setOccassion("Birthday");
                         setIsButtonClicked2(!isButtonClicked2);
@@ -1633,9 +1627,8 @@ function RestaurantPage({ login, setlogin }) {
                     </li>
                     <li
                       //className="border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer"
-                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${
-                        isButtonClicked3 ? "border border-yellow-500 " : ""
-                      }`}
+                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${isButtonClicked3 ? "border border-yellow-500 " : ""
+                        }`}
                       onClick={() => {
                         setOccassion("Anniversary");
                         setIsButtonClicked3(!isButtonClicked3);
@@ -1645,9 +1638,8 @@ function RestaurantPage({ login, setlogin }) {
                     </li>
                     <li
                       // className="border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer"
-                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${
-                        isButtonClicked4 ? "border border-yellow-500 " : ""
-                      }`}
+                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${isButtonClicked4 ? "border border-yellow-500 " : ""
+                        }`}
                       onClick={() => {
                         setOccassion("Couple Date");
                         setIsButtonClicked4(!isButtonClicked4);
@@ -2023,11 +2015,27 @@ function RestaurantPage({ login, setlogin }) {
               alt=""
               onClick={openModal7}
             />
-            <img
+            {/* <img
               src={recommend}
               className="absolute top-80 right-0 cursor-pointer lg:top-44 md:top-28 md:h-[13vw] sm:top-28 sm:h-[16vw] lg:h-fit"
               alt=""
-            />
+            /> */}
+            <div className="bg-[#FFD601] w-60 rounded-l-lg absolute top-80 right-0 lg:top-44 md:top-28 md:h-[13vw] sm:top-28 sm:h-[16vw] lg:h-24 flex flex-col justify-center items-center">
+              <div className="flex justify-center">
+                <img
+                  src={allStudent}
+                  alt=""
+                  className="w-24 h-12 "
+                />
+                <div className="font-bold text-2xl">
+                  {restaurantData?.recommendations.length}+
+                  {/* 4689+ */}
+                </div>
+              </div>
+              <div className="font-bold text-2xl">
+                Recommendations
+              </div>
+            </div>
             {/* <img
             src={restro}
             className="absolute left-4 bottom-5 md:h-[12vw] sm:w-[80vw] h-[22vw] lg:w-[60vw]"
