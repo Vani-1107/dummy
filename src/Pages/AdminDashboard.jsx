@@ -21,7 +21,7 @@ function AdminDashboard() {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://localhost:4000/api/getPartnerData",
+      url: "https://coral-app-mvtxg.ondigitalocean.app/api/getPartnerData",
       headers: {},
     };
     if (!date) {
@@ -39,7 +39,7 @@ function AdminDashboard() {
       let config1 = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `http://localhost:4000/api/getPartnerDataByDate/${date}`,
+        url: `https://coral-app-mvtxg.ondigitalocean.app/api/getPartnerDataByDate/${date}`,
         headers: {},
       };
       axios.request(config1)

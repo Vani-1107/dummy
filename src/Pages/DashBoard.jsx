@@ -41,7 +41,7 @@ const Payout = () => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/bookings/find/${resId}/${bookingDate}`,
+            url: `https://coral-app-mvtxg.ondigitalocean.app/api/bookings/find/${resId}/${bookingDate}`,
             headers: {}
         };
 
@@ -69,7 +69,7 @@ const Payout = () => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/payment/${resId}/${paymentDate}`,
+            url: `https://coral-app-mvtxg.ondigitalocean.app/api/payment/${resId}/${paymentDate}`,
             headers: { }
           };
           

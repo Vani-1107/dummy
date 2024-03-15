@@ -178,17 +178,20 @@ function AdminMerchant() {
             console.log("pic : ", pic);
 
             console.log("logo : ", logo);
+            formData.pic=pic;
+            formData.logo=logo;
             // setallData({...formData, pic});
 
             // console.log("all data : ", alldata);
 
             // let data = JSON.stringify(alldata);
+
             let data = JSON.stringify(formData);
 
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: 'http://localhost:4000/api/postFormDetails',
+                url: 'https://coral-app-mvtxg.ondigitalocean.app/api/postFormDetails',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -224,7 +227,7 @@ function AdminMerchant() {
         let config = {
             method: "post",
             maxBodyLength: Infinity,
-            url: "http://localhost:4000/api/gallery",
+            url: "https://coral-app-mvtxg.ondigitalocean.app/api/gallery",
             data: formData,
         };
 
@@ -249,7 +252,7 @@ function AdminMerchant() {
         let config = {
             method: "post",
             maxBodyLength: Infinity,
-            url: "http://localhost:4000/api/gallery",
+            url: "https://coral-app-mvtxg.ondigitalocean.app/api/gallery",
             // headers: {
             //   ...data.getHeaders(),
             // },
@@ -330,7 +333,7 @@ function AdminMerchant() {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/search?search=${searchAll}`,
+            url: `https://coral-app-mvtxg.ondigitalocean.app/api/search?search=${searchAll}`,
             headers: {}
         };
 
@@ -349,7 +352,7 @@ function AdminMerchant() {
         let config1 = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/search?search=${searchAll}`,
+            url: `https://coral-app-mvtxg.ondigitalocean.app/api/search?search=${searchAll}`,
             headers: {}
         };
 
@@ -365,7 +368,7 @@ function AdminMerchant() {
         let config3 = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/getPartnerData?search=${searchNew}`,
+            url: `https://coral-app-mvtxg.ondigitalocean.app/api/getPartnerData?search=${searchNew}`,
             headers: {}
         };
 
@@ -399,7 +402,7 @@ function AdminMerchant() {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/getPartnerData?search=${searchNew}`,
+            url: `https://coral-app-mvtxg.ondigitalocean.app/api/getPartnerData?search=${searchNew}`,
             headers: {}
         };
 

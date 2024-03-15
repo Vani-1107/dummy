@@ -143,7 +143,7 @@ function RestaurantPage({ login, setlogin }) {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/generalinfo/${id}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/generalinfo/${id}`,
       headers: {}
     };
 
@@ -206,7 +206,7 @@ function RestaurantPage({ login, setlogin }) {
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `http://localhost:4000/api/user/search?search=${ph}`,
+        url: `https://coral-app-mvtxg.ondigitalocean.app/api/user/search?search=${ph}`,
         headers: {}
       };
 
@@ -243,7 +243,7 @@ function RestaurantPage({ login, setlogin }) {
             let config1 = {
               method: 'post',
               maxBodyLength: Infinity,
-              url: 'http://localhost:4000/api/user/create',
+              url: 'https://coral-app-mvtxg.ondigitalocean.app/api/user/create',
               headers: {
                 'Content-Type': 'application/json'
               },
@@ -289,7 +289,7 @@ function RestaurantPage({ login, setlogin }) {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/user/profile/create?search=${ph}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/user/profile/create?search=${ph}`,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -336,7 +336,7 @@ function RestaurantPage({ login, setlogin }) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:4000/api/gallery",
+      url: "https://coral-app-mvtxg.ondigitalocean.app/api/gallery",
       data: formData,
     };
 
@@ -363,7 +363,7 @@ function RestaurantPage({ login, setlogin }) {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/menu/${id}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/menu/${id}`,
       headers: {}
     };
 
@@ -401,7 +401,7 @@ function RestaurantPage({ login, setlogin }) {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/bookings/${userId}/${id}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/bookings/${userId}/${id}`,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -793,7 +793,7 @@ function RestaurantPage({ login, setlogin }) {
       );
       console.log("jjjjjjjjjj");
       const orderResponse = await axios.post(
-        "http://localhost:4000/api/payment/capturepayment",
+        "https://coral-app-mvtxg.ondigitalocean.app/api/payment/capturepayment",
         { amount }
       );
       console.log(orderResponse);
@@ -827,7 +827,7 @@ function RestaurantPage({ login, setlogin }) {
   async function verifypayment(bodydata) {
     console.log("hellohjjjjjjj");
     try {
-      const verifyUrl = "http://localhost:4000/api/payment/verifypayment";
+      const verifyUrl = "https://coral-app-mvtxg.ondigitalocean.app/api/payment/verifypayment";
       const { data } = await axios.post(verifyUrl, {
         bodydata,
       });
@@ -884,7 +884,7 @@ function RestaurantPage({ login, setlogin }) {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/unrecommended/restaurant/${userId}/${id}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/unrecommended/restaurant/${userId}/${id}`,
       headers: {},
       data: {
         userId: userId,
@@ -914,7 +914,7 @@ function RestaurantPage({ login, setlogin }) {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/recommended/restaurant/${userId}/${id}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/recommended/restaurant/${userId}/${id}`,
       headers: {},
       data: {
         userId: userId,
@@ -937,7 +937,7 @@ function RestaurantPage({ login, setlogin }) {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/gallery/${id}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/gallery/${id}`,
       headers: {},
     };
 
@@ -1003,8 +1003,8 @@ function RestaurantPage({ login, setlogin }) {
       });
 
       const apiRoute = buttonStates[itemIndex]
-        ? `http://localhost:4000/api/unrecommended/menu/${userId}/${id}`
-        : `http://localhost:4000/api/recommended/menu/${userId}/${id}`;
+        ? `https://coral-app-mvtxg.ondigitalocean.app/api/unrecommended/menu/${userId}/${id}`
+        : `https://coral-app-mvtxg.ondigitalocean.app/api/recommended/menu/${userId}/${id}`;
 
       let config = {
         method: 'post',

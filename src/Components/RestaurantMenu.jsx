@@ -17,7 +17,7 @@ function RestaurantMenu({restaurantData}) {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/menu/${id}`,
+            url: `https://coral-app-mvtxg.ondigitalocean.app/api/menu/${id}`,
             headers: {}
         };
 

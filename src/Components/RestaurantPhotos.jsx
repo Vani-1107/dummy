@@ -21,7 +21,7 @@ function RestaurantPhotos({restaurantData}) {
         let config = {
             method: "get",
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/gallery/${id}`,
+            url: `https://coral-app-mvtxg.ondigitalocean.app/api/gallery/${id}`,
             headers: {},
         };
 

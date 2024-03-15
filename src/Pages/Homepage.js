@@ -47,7 +47,7 @@ const Homepage = ({ login, setlogin, onScrollChange }) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:4000/api/gallery",
+      url: "https://coral-app-mvtxg.ondigitalocean.app/api/gallery",
       data: formData,
     };
 
@@ -75,7 +75,7 @@ const Homepage = ({ login, setlogin, onScrollChange }) => {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/searchRestaurant?name=${restaurantName}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/searchRestaurant?name=${restaurantName}`,
       headers: {}
     };
 
@@ -185,7 +185,7 @@ const Homepage = ({ login, setlogin, onScrollChange }) => {
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `http://localhost:4000/api/user/search?search=${ph}`,
+        url: `https://coral-app-mvtxg.ondigitalocean.app/api/user/search?search=${ph}`,
         headers: {}
       };
 
@@ -222,7 +222,7 @@ const Homepage = ({ login, setlogin, onScrollChange }) => {
             let config1 = {
               method: 'post',
               maxBodyLength: Infinity,
-              url: 'http://localhost:4000/api/user/create',
+              url: 'https://coral-app-mvtxg.ondigitalocean.app/api/user/create',
               headers: {
                 'Content-Type': 'application/json'
               },
@@ -268,7 +268,7 @@ const Homepage = ({ login, setlogin, onScrollChange }) => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/user/profile/create?search=${ph}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/user/profile/create?search=${ph}`,
       headers: {
         'Content-Type': 'application/json'
       },

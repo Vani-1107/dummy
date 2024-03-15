@@ -28,7 +28,7 @@ const EditStoreDetail = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/galleryimages/${resId}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/galleryimages/${resId}`,
       // headers: {
       //   ...data.getHeaders(),
       // },
@@ -51,7 +51,7 @@ const EditStoreDetail = () => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/gallery/${resId}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/gallery/${resId}`,
       headers: {},
     };
 
@@ -76,7 +76,7 @@ const EditStoreDetail = () => {
       const config = {
         method: "get",
         maxBodyLength: Infinity,
-        url: `http://localhost:4000/api/generalinfo/${resId}`,
+        url: `https://coral-app-mvtxg.ondigitalocean.app/api/generalinfo/${resId}`,
         headers: {
           "Content-Type": "application/json",
         },

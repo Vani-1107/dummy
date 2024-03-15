@@ -51,7 +51,7 @@ function Joinpartner() {
             };
 
             const { data } = await axios.post(
-                "http://localhost:4000/api/saveBecomePartnerData",
+                "https://coral-app-mvtxg.ondigitalocean.app/api/saveBecomePartnerData",
                 formData,
                 config
             );

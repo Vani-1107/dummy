@@ -64,7 +64,7 @@ function AdminMerchantProfile() {
         let config1 = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/search?search=${id}`,
+            url: `https://coral-app-mvtxg.ondigitalocean.app/api/search?search=${id}`,
             headers: {}
         };
 
@@ -149,7 +149,7 @@ function AdminMerchantProfile() {
         let config = {
             method: 'put',
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/merchantprofile/${id}`,
+            url: `https://coral-app-mvtxg.ondigitalocean.app/api/merchantprofile/${id}`,
             headers: {
                 'Content-Type': 'application/json'
             },

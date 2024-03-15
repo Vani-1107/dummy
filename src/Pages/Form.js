@@ -68,7 +68,7 @@ const Form = () => {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:4000/api/postFormDetails',
+        url: 'https://coral-app-mvtxg.ondigitalocean.app/api/postFormDetails',
         headers: {
           'Content-Type': 'application/json'
         },

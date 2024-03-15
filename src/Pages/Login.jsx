@@ -51,7 +51,7 @@ const Login = () => {
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: 'http://localhost:4000/api/partnerLogin',
+                url: 'https://coral-app-mvtxg.ondigitalocean.app/api/partnerLogin',
                 headers: {
                     'Content-Type': 'application/json'
                 },

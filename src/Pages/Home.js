@@ -43,7 +43,7 @@ const Home = () => {
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/searchRestaurant?name=${restaurantName}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/searchRestaurant?name=${restaurantName}`,
       headers: {}
     };
 
