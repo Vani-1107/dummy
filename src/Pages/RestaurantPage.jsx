@@ -100,33 +100,31 @@ function RestaurantPage({ login, setlogin }) {
   const [mobile, setMobile] = useState(true);
   const [password, setPassword] = useState(false);
   const [profile, setProfile] = useState(false);
-    //current date
-    const date = new Date();
+  //current date
+  const date = new Date();
 
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let currentDate = `${day}-${month}-${year}`;
-  
-    const [profileData, setProfileData] = useState({
-      profileImage: 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1709387339~exp=1709390939~hmac=2bbe2e46b4676e1e7592d5557de6c4768adbf2da781cd9c59e6660fd2b1dbba3&w=740',
-      fullName: 'user',
-      gender: 'male',
-      dob: currentDate,
-      email: 'abc@gmail.com',
-      foodPreference: 'veg',
-      anniversary: '',
-      terms: false,
-    });
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+  let currentDate = `${day}-${month}-${year}`;
+
+  const [profileData, setProfileData] = useState({
+    profileImage: 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1709387339~exp=1709390939~hmac=2bbe2e46b4676e1e7592d5557de6c4768adbf2da781cd9c59e6660fd2b1dbba3&w=740',
+    fullName: 'user',
+    gender: 'male',
+    dob: currentDate,
+    email: 'abc@gmail.com',
+    foodPreference: 'veg',
+    anniversary: '',
+    terms: false,
+  });
 
 
-  
+
   const [allMenuItems, setAllMenuItems] = useState();
   const [discount, setDiscount] = useState(0);
   const [restaurantData, setRestaurantData] = useState();
-  // const [userId, setUserId] = useState();
 
-  
   console.log("res id  : ", id);
 
   // const [user, setUser] = useState();
@@ -301,21 +299,21 @@ function RestaurantPage({ login, setlogin }) {
       .then((response) => {
         console.log(JSON.stringify(response.data));
         localStorage.setItem(
-                "user",
-                JSON.stringify({
-                  id: response.data?._id,
-                  name: response.data?.additionalDetails?.fullName,
-                  image: response.data?.additionalDetails?.image,
-                  phone: response.data?.contactNumber
-                })
-              );
+          "user",
+          JSON.stringify({
+            id: response.data?._id,
+            name: response.data?.additionalDetails?.fullName,
+            image: response.data?.additionalDetails?.image,
+            phone: response.data?.contactNumber
+          })
+        );
 
-              console.log(JSON.stringify({
-                id: response.data?._id,
-                name: response.data?.additionalDetails?.fullName,
-                image: response.data?.additionalDetails?.image,
-                phone: response.data?.contactNumber
-              }));
+        console.log(JSON.stringify({
+          id: response.data?._id,
+          name: response.data?.additionalDetails?.fullName,
+          image: response.data?.additionalDetails?.image,
+          phone: response.data?.contactNumber
+        }));
 
         //navigate to home 
         // navigate("/home");
@@ -358,7 +356,7 @@ function RestaurantPage({ login, setlogin }) {
 
 
   //recommendations
-  
+
 
   const fetchMenu = async () => {
     let config = {
@@ -597,10 +595,12 @@ function RestaurantPage({ login, setlogin }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
-    document.getElementById("background").style.filter = "blur(10px)";
-    document.documentElement.scrollTop = 0;
+    if (userData) {
+      document.getElementById("background").style.filter = "blur(10px)";
+      document.documentElement.scrollTop = 0;
 
-    setIsOpen(true);
+      setIsOpen(true);
+    }
   };
 
   const closeModal = () => {
@@ -620,9 +620,11 @@ function RestaurantPage({ login, setlogin }) {
   const [isOpen1, setIsOpen1] = useState(false);
 
   const openModal1 = () => {
-    setIsOpen1(true);
-    document.getElementById("background").style.filter = "blur(10px)";
-    document.documentElement.scrollTop = 0;
+    if (userData) {
+      setIsOpen1(true);
+      document.getElementById("background").style.filter = "blur(10px)";
+      document.documentElement.scrollTop = 0;
+    }
   };
 
   const closeModal1 = () => {
@@ -633,12 +635,14 @@ function RestaurantPage({ login, setlogin }) {
   const [isOpen2, setIsOpen2] = useState(false);
 
   const openModal2 = () => {
-    if (isOpen4) {
-      setIsOpen4(false);
+    if (userData) {
+      if (isOpen4) {
+        setIsOpen4(false);
+      }
+      setIsOpen2(true);
+      document.getElementById("background").style.filter = "blur(10px)";
+      document.documentElement.scrollTop = 0;
     }
-    setIsOpen2(true);
-    document.getElementById("background").style.filter = "blur(10px)";
-    document.documentElement.scrollTop = 0;
   };
 
   const closeModal2 = () => {
@@ -649,10 +653,12 @@ function RestaurantPage({ login, setlogin }) {
   const [isOpen4, setIsOpen4] = useState(false);
 
   const openModal4 = () => {
-    setIsOpen2(false);
-    setIsOpen4(true);
-    document.getElementById("background").style.filter = "blur(10px)";
-    document.documentElement.scrollTop = 0;
+    if (userData) {
+      setIsOpen2(false);
+      setIsOpen4(true);
+      document.getElementById("background").style.filter = "blur(10px)";
+      document.documentElement.scrollTop = 0;
+    }
   };
 
   const closeModal4 = () => {
@@ -665,9 +671,11 @@ function RestaurantPage({ login, setlogin }) {
   const [isOpen5, setIsOpen5] = useState(false);
 
   const openModal5 = () => {
-    setIsOpen5(true);
-    document.getElementById("background").style.filter = "blur(10px)";
-    document.documentElement.scrollTop = 0;
+    if (userData) {
+      setIsOpen5(true);
+      document.getElementById("background").style.filter = "blur(10px)";
+      document.documentElement.scrollTop = 0;
+    }
   };
 
   const closeModal5 = () => {
@@ -678,9 +686,11 @@ function RestaurantPage({ login, setlogin }) {
   const [isOpen6, setIsOpen6] = useState(false);
 
   const openModal6 = () => {
-    setIsOpen6(true);
-    document.getElementById("background").style.filter = "blur(10px)";
-    document.documentElement.scrollTop = 0;
+    if (userData) {
+      setIsOpen6(true);
+      document.getElementById("background").style.filter = "blur(10px)";
+      document.documentElement.scrollTop = 0;
+    }
   };
 
   const closeModal6 = () => {
@@ -940,7 +950,7 @@ function RestaurantPage({ login, setlogin }) {
     if (isOpen) {
       fetchMenu();
     }
-  }, [isOpen]);    
+  }, [isOpen]);
 
   const [buttonStates, setButtonStates] = useState([]);
 
@@ -1160,7 +1170,7 @@ function RestaurantPage({ login, setlogin }) {
       {/* popup1 recommendation */}
 
       <div className="">
-        {isOpen && login && (
+        {isOpen && userData && (
           <div>
             <div className="absolute top-16 lg:left-[33%] md:left-[25%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[50vw] sm:h-fit sm:w-[90%]">
@@ -1263,7 +1273,7 @@ function RestaurantPage({ login, setlogin }) {
 
       {/* available offer popup */}
       <div className="">
-        {isOpen4 && login &&  (
+        {isOpen4 && userData && (
           <div>
             <div className="absolute top-16 lg:left-[33%] md:left-[25%] sm:left-[2%] bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[35vw] md:h-fit md:w-[50vw] sm:h-fit sm:w-[98vw]">
@@ -1350,7 +1360,7 @@ function RestaurantPage({ login, setlogin }) {
 
       {/* book a table */}
       <div>
-        {isOpen1 && login && (
+        {isOpen1 && userData && (
           <div>
             <div className="absolute top-16 lg:left-[33%] md:left-[22%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[60vw] sm:h-[90%] sm:w-[99vw]">
@@ -1504,7 +1514,7 @@ function RestaurantPage({ login, setlogin }) {
 
       {/* pay a bill popup */}
       <div className="">
-        {isOpen2 && login &&(
+        {isOpen2 && userData && (
           <div>
             <div className="absolute top-20 lg:left-[33%] md:left-[33%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[44vw] sm:h-fit sm:w-[95%]">
@@ -1596,7 +1606,7 @@ function RestaurantPage({ login, setlogin }) {
        paymentsuccesful popup */}
 
       <div className="">
-        {isOpen5 && login && (
+        {isOpen5 && userData && (
           <div>
             <div className="absolute top-20 lg:left-[33%] md:left-[33%]   bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[44vw] sm:h-fit sm:w-[90%]">
@@ -1690,7 +1700,7 @@ function RestaurantPage({ login, setlogin }) {
 
       {/* popup failed */}
       <div className="">
-        {isOpen6 && login && (
+        {isOpen6 && userData && (
           <div>
             <div className="absolute top-20 lg:left-[33%] md:left-[33%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[44vw] sm:h-fit sm:w-[95%]">
@@ -1745,7 +1755,7 @@ function RestaurantPage({ login, setlogin }) {
 
       {/* share popup */}
       <div>
-        {isOpen7 &&  (
+        {isOpen7 && (
           <div>
             <div className="absolute lg:h-fit top-28 lg:left-[38%] md:left-[22%] sm:left-0 bg-white z-[100] md:h-fit rounded-lg sm:h-[100vw]">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[58vw] sm:h-fit sm:w-[95%]">
@@ -1820,7 +1830,7 @@ function RestaurantPage({ login, setlogin }) {
         {" "}
         <div className="Home">
           <div className="home-img sm:h-[50vh] lg:h-[60vh] w-[100vw] relative">
-            <img className="w-[100vw] h-full" src={bg} alt=""/>
+            <img className="w-[100vw] h-full" src={bg} alt="" />
             <img
               className=" absolute top-6 left-12 cursor-pointer lg:top-6 md:top-4  sm:top-4 sm:h-8"
               src={arrow}
@@ -1946,7 +1956,7 @@ function RestaurantPage({ login, setlogin }) {
                   <img className=" px-6 py-2 h-10 mt-2" src={arrow1} alt="" />
                 </button>
               </div>
-              
+
               <div className="offers"></div>
               <div className="button3 ">
                 <button
@@ -1971,13 +1981,13 @@ function RestaurantPage({ login, setlogin }) {
             </div>
           </div>
         </div>
-        <RestaurantAbout restaurantData={restaurantData}/>
-        <RestaurantPhotos  restaurantData={restaurantData}/>
-        <RestaurantMenu restaurantData={restaurantData}/>
-        <RestaurantFooter restaurantData={restaurantData}/>
+        <RestaurantAbout restaurantData={restaurantData} />
+        <RestaurantPhotos restaurantData={restaurantData} />
+        <RestaurantMenu restaurantData={restaurantData} />
+        <RestaurantFooter restaurantData={restaurantData} />
       </div>
 
-      
+
 
       {/* footer - small screen */}
       <div
