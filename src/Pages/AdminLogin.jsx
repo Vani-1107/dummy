@@ -34,7 +34,7 @@ function AdminLogin()
         const user = JSON.parse(localStorage.getItem( "adminData"));
         if(user)
         {
-            navigate("/admindashboard");
+            navigate("/admin/merchant");
         }
     },[navigate]);
     function submitHandler(e) {
@@ -50,7 +50,7 @@ function AdminLogin()
             });   
             setUser(formData);
             localStorage.setItem("adminData",JSON.stringify(formData));
-            navigate("/admindashboard");
+            navigate("/admin/merchant");
         }
         else {
             // alert("Invalid username or password");
