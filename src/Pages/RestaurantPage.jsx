@@ -36,12 +36,11 @@ import { useParams } from "react-router-dom";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import OtpInput from "otp-input-react";
-import PhoneInput from 'react-phone-input-2';
+import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { auth } from "../firebase.config";
 import { IoClose } from "react-icons/io5";
-import { FaEdit } from 'react-icons/fa';
-
+import { FaEdit } from "react-icons/fa";
 
 const datanew = [
   {
@@ -87,11 +86,10 @@ const images = [
   { url: slider, caption: "Image 3" },
 ];
 
-
 function RestaurantPage({ login, setlogin }) {
   const { id } = useParams();
 
-  const [pic, setPic] = useState('');
+  const [pic, setPic] = useState("");
   const [otp, setOtp] = useState("");
   const [ph, setPh] = useState("");
   // const [loading, setLoading] = useState(false);
@@ -109,17 +107,16 @@ function RestaurantPage({ login, setlogin }) {
   let currentDate = `${day}-${month}-${year}`;
 
   const [profileData, setProfileData] = useState({
-    profileImage: 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1709387339~exp=1709390939~hmac=2bbe2e46b4676e1e7592d5557de6c4768adbf2da781cd9c59e6660fd2b1dbba3&w=740',
-    fullName: 'user',
-    gender: 'male',
+    profileImage:
+      "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1709387339~exp=1709390939~hmac=2bbe2e46b4676e1e7592d5557de6c4768adbf2da781cd9c59e6660fd2b1dbba3&w=740",
+    fullName: "user",
+    gender: "male",
     dob: currentDate,
-    email: 'abc@gmail.com',
-    foodPreference: 'veg',
-    anniversary: '',
+    email: "abc@gmail.com",
+    foodPreference: "veg",
+    anniversary: "",
     terms: false,
   });
-
-
 
   const [allMenuItems, setAllMenuItems] = useState();
   const [discount, setDiscount] = useState(0);
@@ -138,16 +135,16 @@ function RestaurantPage({ login, setlogin }) {
   // console.log("userdata : ", user);
   console.log("userId : ", userId);
 
-
   useEffect(() => {
     let config = {
-      method: 'get',
+      method: "get",
       maxBodyLength: Infinity,
       url: `https://coral-app-mvtxg.ondigitalocean.app/api/generalinfo/${id}`,
-      headers: {}
+      headers: {},
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
         console.log("res details :", response.data);
@@ -156,7 +153,6 @@ function RestaurantPage({ login, setlogin }) {
       .catch((error) => {
         console.log(error);
       });
-
   }, []);
 
   const toast = useToast();
@@ -167,7 +163,8 @@ function RestaurantPage({ login, setlogin }) {
 
     setProfileData((prevProfileData) => ({
       ...prevProfileData,
-      [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
+      [name]:
+        type === "checkbox" ? checked : type === "file" ? files[0] : value,
     }));
   };
 
@@ -176,16 +173,19 @@ function RestaurantPage({ login, setlogin }) {
     try {
       const recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", {});
       const formatPh = "+" + ph;
-      const confirmation = await signInWithPhoneNumber(auth, formatPh, recaptcha);
+      const confirmation = await signInWithPhoneNumber(
+        auth,
+        formatPh,
+        recaptcha
+      );
       console.log(confirmation);
       setUser(confirmation);
       // setMobile(false);
       setShowOTP(true);
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const onOTPVerify = async () => {
     // setLoading(true);
@@ -204,13 +204,14 @@ function RestaurantPage({ login, setlogin }) {
 
       // finding if user exists
       let config = {
-        method: 'get',
+        method: "get",
         maxBodyLength: Infinity,
         url: `https://coral-app-mvtxg.ondigitalocean.app/api/user/search?search=${ph}`,
-        headers: {}
+        headers: {},
       };
 
-      axios.request(config)
+      axios
+        .request(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
 
@@ -223,37 +224,38 @@ function RestaurantPage({ login, setlogin }) {
                 id: response.data[0]?._id,
                 name: response.data[0]?.additionalDetails?.fullName,
                 image: response.data[0]?.additionalDetails?.image,
-                phone: response.data[0]?.contactNumber
+                phone: response.data[0]?.contactNumber,
               })
             );
-            console.log(JSON.stringify({
-              id: response.data[0]?._id,
-              name: response.data[0]?.additionalDetails?.fullName,
-              image: response.data[0]?.additionalDetails?.image,
-              phone: response.data[0]?.contactNumber
-            }));
+            console.log(
+              JSON.stringify({
+                id: response.data[0]?._id,
+                name: response.data[0]?.additionalDetails?.fullName,
+                image: response.data[0]?.additionalDetails?.image,
+                phone: response.data[0]?.contactNumber,
+              })
+            );
             // navigate('/home');
-          }
-          else {
+          } else {
             //create user profile
             formData.ph = ph;
             console.log(formData);
             const data = JSON.stringify(formData);
             console.log(data);
             let config1 = {
-              method: 'post',
+              method: "post",
               maxBodyLength: Infinity,
-              url: 'https://coral-app-mvtxg.ondigitalocean.app/api/user/create',
+              url: "https://coral-app-mvtxg.ondigitalocean.app/api/user/create",
               headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
               },
-              data: data
+              data: data,
             };
 
-            axios.request(config1)
+            axios
+              .request(config1)
               .then((response) => {
                 console.log(JSON.stringify(response.data));
-
               })
               .catch((error) => {
                 console.log(error);
@@ -264,17 +266,16 @@ function RestaurantPage({ login, setlogin }) {
         .catch((error) => {
           console.log(error);
         });
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   //handle only the mobile number submit
   const handleSubmitMobileNumber = (e) => {
     e.preventDefault();
     // Handle form submission logic here with formData
-    console.log('Form Data:', formData);
+    console.log("Form Data:", formData);
     setMobile(false);
     setPassword(true);
   };
@@ -282,21 +283,22 @@ function RestaurantPage({ login, setlogin }) {
   //handle naviagate to profile and add move to home
   const handleSubmitProfile = async (e) => {
     e.preventDefault();
-    console.log('Profile data :', profileData);
+    console.log("Profile data :", profileData);
 
     //posting data
     const data = JSON.stringify(profileData);
     let config = {
-      method: 'post',
+      method: "post",
       maxBodyLength: Infinity,
       url: `https://coral-app-mvtxg.ondigitalocean.app/api/user/profile/create?search=${ph}`,
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      data: data
+      data: data,
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
         localStorage.setItem(
@@ -305,18 +307,20 @@ function RestaurantPage({ login, setlogin }) {
             id: response.data?._id,
             name: response.data?.additionalDetails?.fullName,
             image: response.data?.additionalDetails?.image,
-            phone: response.data?.contactNumber
+            phone: response.data?.contactNumber,
           })
         );
 
-        console.log(JSON.stringify({
-          id: response.data?._id,
-          name: response.data?.additionalDetails?.fullName,
-          image: response.data?.additionalDetails?.image,
-          phone: response.data?.contactNumber
-        }));
+        console.log(
+          JSON.stringify({
+            id: response.data?._id,
+            name: response.data?.additionalDetails?.fullName,
+            image: response.data?.additionalDetails?.image,
+            phone: response.data?.contactNumber,
+          })
+        );
 
-        //navigate to home 
+        //navigate to home
         // navigate("/home");
       })
       .catch((error) => {
@@ -354,20 +358,18 @@ function RestaurantPage({ login, setlogin }) {
       });
   };
 
-
-
   //recommendations
-
 
   const fetchMenu = async () => {
     let config = {
-      method: 'get',
+      method: "get",
       maxBodyLength: Infinity,
       url: `https://coral-app-mvtxg.ondigitalocean.app/api/menu/${id}`,
-      headers: {}
+      headers: {},
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
         setAllMenuItems(response.data);
@@ -376,7 +378,7 @@ function RestaurantPage({ login, setlogin }) {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   //book a table
   const [dateSelected, setDateSelected] = useState("");
@@ -399,16 +401,17 @@ function RestaurantPage({ login, setlogin }) {
 
     const data = JSON.stringify(formData);
     let config = {
-      method: 'post',
+      method: "post",
       maxBodyLength: Infinity,
       url: `https://coral-app-mvtxg.ondigitalocean.app/api/bookings/${userId}/${id}`,
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      data: data
+      data: data,
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
         toast({
@@ -418,7 +421,6 @@ function RestaurantPage({ login, setlogin }) {
           isClosable: true,
           position: "top",
         });
-
       })
       .catch((error) => {
         console.log(error);
@@ -452,7 +454,6 @@ function RestaurantPage({ login, setlogin }) {
     const updateAvailableHours = () => {
       const now = new Date();
       const hours = [];
-
 
       // Ensure opening time is before closing time
       if (openingTime > closingTime) {
@@ -531,7 +532,6 @@ function RestaurantPage({ login, setlogin }) {
     ];
 
     return `${day} ${monthWords[month - 1]}`;
-
   };
   const [selectedId, setSelectedId] = useState(null);
 
@@ -547,11 +547,9 @@ function RestaurantPage({ login, setlogin }) {
       const day = date.getDate();
       const month = date.getMonth() + 1; // Months are 0-indexed
       const year = date.getFullYear();
-      let fullDate = '';
-      if (month < 10)
-        fullDate = `${day}-0${month}-${year}`;
-      else
-        fullDate = `${day}-${month}-${year}`;
+      let fullDate = "";
+      if (month < 10) fullDate = `${day}-0${month}-${year}`;
+      else fullDate = `${day}-${month}-${year}`;
       // Extract the day of the week using getDay()
       const weekday = d.getDay();
 
@@ -601,8 +599,7 @@ function RestaurantPage({ login, setlogin }) {
       document.documentElement.scrollTop = 0;
 
       setIsOpen(true);
-    }
-    else{
+    } else {
       document.documentElement.scrollTop = 0;
       setlogin(true);
       setMobile(true);
@@ -630,8 +627,7 @@ function RestaurantPage({ login, setlogin }) {
       setIsOpen1(true);
       document.getElementById("background").style.filter = "blur(10px)";
       document.documentElement.scrollTop = 0;
-    }
-    else{
+    } else {
       document.documentElement.scrollTop = 0;
       setlogin(true);
       setMobile(true);
@@ -653,8 +649,7 @@ function RestaurantPage({ login, setlogin }) {
       setIsOpen2(true);
       document.getElementById("background").style.filter = "blur(10px)";
       document.documentElement.scrollTop = 0;
-    }
-    else{
+    } else {
       document.documentElement.scrollTop = 0;
       setlogin(true);
       setMobile(true);
@@ -674,8 +669,7 @@ function RestaurantPage({ login, setlogin }) {
       setIsOpen4(true);
       document.getElementById("background").style.filter = "blur(10px)";
       document.documentElement.scrollTop = 0;
-    }
-    else{
+    } else {
       document.documentElement.scrollTop = 0;
       setlogin(true);
       setMobile(true);
@@ -696,8 +690,7 @@ function RestaurantPage({ login, setlogin }) {
       setIsOpen5(true);
       document.getElementById("background").style.filter = "blur(10px)";
       document.documentElement.scrollTop = 0;
-    }
-    else{
+    } else {
       document.documentElement.scrollTop = 0;
       setlogin(true);
       setMobile(true);
@@ -716,8 +709,7 @@ function RestaurantPage({ login, setlogin }) {
       setIsOpen6(true);
       document.getElementById("background").style.filter = "blur(10px)";
       document.documentElement.scrollTop = 0;
-    }
-    else{
+    } else {
       document.documentElement.scrollTop = 0;
       setlogin(true);
       setMobile(true);
@@ -742,7 +734,7 @@ function RestaurantPage({ login, setlogin }) {
     document.getElementById("background").style.filter = "blur(0px)";
   };
 
-  useEffect(() => { }, [
+  useEffect(() => {}, [
     isOpen,
     isOpen1,
     isOpen4,
@@ -786,7 +778,7 @@ function RestaurantPage({ login, setlogin }) {
     console.log(amount);
     event.preventDefault();
 
-    let restaurantId = 210612;
+    // let restaurantId = 210612;
     try {
       const res = await loadScript(
         "https://checkout.razorpay.com/v1/checkout.js"
@@ -809,7 +801,7 @@ function RestaurantPage({ login, setlogin }) {
         image: chat,
         handler: function (response) {
           console.log(response);
-          verifypayment({ ...response, restaurantId, amount });
+          verifypayment({ ...response, id,userId, amount });
         },
       };
       console.log("hello");
@@ -821,13 +813,14 @@ function RestaurantPage({ login, setlogin }) {
         console.log(response.error);
       });
       setAmount("");
-    } catch (error) { }
+    } catch (error) {}
   };
 
   async function verifypayment(bodydata) {
     console.log("hellohjjjjjjj");
     try {
-      const verifyUrl = "https://coral-app-mvtxg.ondigitalocean.app/api/payment/verifypayment";
+      const verifyUrl =
+        "https://coral-app-mvtxg.ondigitalocean.app/api/payment/verifypayment";
       const { data } = await axios.post(verifyUrl, {
         bodydata,
       });
@@ -871,9 +864,7 @@ function RestaurantPage({ login, setlogin }) {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [isButtonClicked1, setIsButtonClicked1] = useState(false);
 
-
   const handleNotRecommendClick = () => {
-
     if (isButtonClicked) {
       return;
     }
@@ -882,7 +873,7 @@ function RestaurantPage({ login, setlogin }) {
     setIsButtonClicked1(false);
 
     let config = {
-      method: 'post',
+      method: "post",
       maxBodyLength: Infinity,
       url: `https://coral-app-mvtxg.ondigitalocean.app/api/unrecommended/restaurant/${userId}/${id}`,
       headers: {},
@@ -892,7 +883,8 @@ function RestaurantPage({ login, setlogin }) {
       },
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
       })
@@ -901,9 +893,7 @@ function RestaurantPage({ login, setlogin }) {
       });
   };
 
-
   const handleRecommendClick = async () => {
-
     if (isButtonClicked1) {
       return;
     }
@@ -912,9 +902,9 @@ function RestaurantPage({ login, setlogin }) {
     setIsButtonClicked(false);
 
     let config = {
-      method: 'post',
+      method: "post",
       maxBodyLength: Infinity,
-      url: `https://coral-app-mvtxg.ondigitalocean.app/api/recommended/restaurant/${userId}/${id}`,
+      url: `http://localhost:4000/api/recommended/restaurant/${userId}/${id}`,
       headers: {},
       data: {
         userId: userId,
@@ -922,7 +912,8 @@ function RestaurantPage({ login, setlogin }) {
       },
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
       })
@@ -955,7 +946,6 @@ function RestaurantPage({ login, setlogin }) {
   useEffect(() => {
     getImages();
   }, []);
-
 
   //select
 
@@ -993,10 +983,9 @@ function RestaurantPage({ login, setlogin }) {
 
   const handleRecommendationsClick = (id) => {
     console.log("Clicked menu ID:", id);
-    const itemIndex = allMenuItems.findIndex(item => item._id === id);
+    const itemIndex = allMenuItems.findIndex((item) => item._id === id);
     if (itemIndex !== -1) {
-
-      setButtonStates(prevStates => {
+      setButtonStates((prevStates) => {
         const newStates = [...prevStates];
         newStates[itemIndex] = !newStates[itemIndex];
         return newStates;
@@ -1007,7 +996,7 @@ function RestaurantPage({ login, setlogin }) {
         : `https://coral-app-mvtxg.ondigitalocean.app/api/recommended/menu/${userId}/${id}`;
 
       let config = {
-        method: 'post',
+        method: "post",
         maxBodyLength: Infinity,
         url: apiRoute,
         headers: {},
@@ -1017,7 +1006,8 @@ function RestaurantPage({ login, setlogin }) {
         },
       };
 
-      axios.request(config)
+      axios
+        .request(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
         })
@@ -1031,49 +1021,61 @@ function RestaurantPage({ login, setlogin }) {
     <div>
       {/* login */}
       <div className={`absolute w-full h-[95vh] top-[65px]`}>
-        {
-          login &&
+        {login && (
           <div className="w-full">
             {/* blur */}
-            <div className='absolute top-0 z-[100] w-full h-[100vh] bg-[rgba(95,95,95,0.82)] '></div>
+            <div className="absolute top-0 z-[100] w-full h-[100vh] bg-[rgba(95,95,95,0.82)] "></div>
           </div>
-        }
-        {
-          login && mobile &&
+        )}
+        {login && mobile && (
           <div className="w-full">
             <div className="z-[200] max-w-[380px] w-[100%]  p-5  rounded-md flex flex-col  bg-white absolute top-[25%] left-[50%] z translate-x-[-50%] translate-y-[-50%] ">
               <div className="flex justify-between">
-                <p className="font-[600] font-sans text-[1.8rem]">Login Or SignUp</p>
-                <IoClose className="text-[1.4rem] cursor-pointer"
+                <p className="font-[600] font-sans text-[1.8rem]">
+                  Login Or SignUp
+                </p>
+                <IoClose
+                  className="text-[1.4rem] cursor-pointer"
                   onClick={() => {
-                    setlogin(prev => !prev);
-                    setMobile(true)
-                    setPassword(false)
-                  }} />
+                    setlogin((prev) => !prev);
+                    setMobile(true);
+                    setPassword(false);
+                  }}
+                />
               </div>
-              <p className="font-[400] font-sans text-[.9rem] text-gray-400 mb-[.5rem]">Enter Mobile Number</p>
+              <p className="font-[400] font-sans text-[.9rem] text-gray-400 mb-[.5rem]">
+                Enter Mobile Number
+              </p>
               <div className="relative w-full flex flex-col mx-auto">
                 {/* mobileNo */}
                 <PhoneInput country={"in"} value={ph} onChange={setPh} />
-                <button className="bg-[#EAB308] font-sen font-[500] px-6 py-3 rounded-md uppercase mb-[.5rem] mt-4" onClick={onSignup}>Continue</button>
+                <button
+                  className="bg-[#EAB308] font-sen font-[500] px-6 py-3 rounded-md uppercase mb-[.5rem] mt-4"
+                  onClick={onSignup}
+                >
+                  Continue
+                </button>
               </div>
               <div id="recaptcha-container"></div>
             </div>
           </div>
-        }
-        {
-          login && showOTP &&
+        )}
+        {login && showOTP && (
           <div className="z-[200] max-w-[380px] w-[100%] p-5 rounded-md flex flex-col bg-white absolute top-[70%] left-[50%] z translate-x-[-50%] translate-y-[-50%] ">
             <div className="flex justify-between">
               <p className="font-[600] font-sans text-[1.8rem]">Enter OTP</p>
-              <IoClose className="text-[1.4rem] cursor-pointer"
+              <IoClose
+                className="text-[1.4rem] cursor-pointer"
                 onClick={() => {
-                  setlogin(prev => !prev);
-                  setMobile(true)
-                  setPassword(false)
-                }} />
+                  setlogin((prev) => !prev);
+                  setMobile(true);
+                  setPassword(false);
+                }}
+              />
             </div>
-            <p className="font-[400] font-sans text-[.9rem] text-gray-400 mb-[.5rem]">An OTP has been sent to +91 {ph}</p>
+            <p className="font-[400] font-sans text-[.9rem] text-gray-400 mb-[.5rem]">
+              An OTP has been sent to +91 {ph}
+            </p>
             <OtpInput
               value={otp}
               onChange={setOtp}
@@ -1084,28 +1086,45 @@ function RestaurantPage({ login, setlogin }) {
               className="opt-container mb-3"
             ></OtpInput>
 
-            <button className="bg-[#EAB308] font-sen font-[500] px-6 py-3 rounded-md uppercase mb-[.5rem]"
+            <button
+              className="bg-[#EAB308] font-sen font-[500] px-6 py-3 rounded-md uppercase mb-[.5rem]"
               onClick={onOTPVerify}
-            >Verify</button>
-            <p className=" capitalize">Didn't recieve code? <span className=" cursor-pointer text-[#EAB308]" onClick={handleSubmitMobileNumber}>Resend Code</span></p>
+            >
+              Verify
+            </button>
+            <p className=" capitalize">
+              Didn't recieve code?{" "}
+              <span
+                className=" cursor-pointer text-[#EAB308]"
+                onClick={handleSubmitMobileNumber}
+              >
+                Resend Code
+              </span>
+            </p>
           </div>
-        }
-        {
-          login && profile &&
+        )}
+        {login && profile && (
           <div className="z-[200] max-w-[400px] w-[100%]  p-5  rounded-md flex flex-col  bg-white absolute top-[50%] left-[50%] z translate-x-[-50%] translate-y-[-50%] ">
-
             <p className="font-[600] font-sans text-[1.8rem]">Create Profile</p>
 
             {/* form */}
             <form className="flex flex-col">
               {/* image */}
 
-              <label htmlFor="profileImage" className="relative inline-block w-20 h-20 overflow-hidden bg-gray-300 rounded-full cursor-pointer">
+              <label
+                htmlFor="profileImage"
+                className="relative inline-block w-20 h-20 overflow-hidden bg-gray-300 rounded-full cursor-pointer"
+              >
                 {profileData.profileImage ? (
                   <div className="">
-                    <img src={profileData.profileImage} alt="Profile" className="object-cover w-full h-full" />
+                    <img
+                      src={profileData.profileImage}
+                      alt="Profile"
+                      className="object-cover w-full h-full"
+                    />
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                      <FaEdit size={20} className=" text-white" /> {/* Edit icon */}
+                      <FaEdit size={20} className=" text-white" />{" "}
+                      {/* Edit icon */}
                     </div>
                   </div>
                 ) : (
@@ -1126,26 +1145,42 @@ function RestaurantPage({ login, setlogin }) {
                     postDetails(files[0]);
                     // handleChangeProfile(files);
                     // handleImagePreview(files);
-                  }
-                  }
+                  }}
                 />
               </label>
 
-
-
               {/* fullName */}
               <div className="relative w-full flex flex-col">
-                <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]" htmlFor="fullName">Full Name:</label>
+                <label
+                  className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                  htmlFor="fullName"
+                >
+                  Full Name:
+                </label>
                 <input
                   className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
-                  type="text" id="fullName" name="fullName" required onChange={handleChangeProfile} />
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  required
+                  onChange={handleChangeProfile}
+                />
               </div>
               {/* gender */}
-              <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
-                htmlFor="gender">Gender:</label>
+              <label
+                className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                htmlFor="gender"
+              >
+                Gender:
+              </label>
               <select
                 className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
-                id="gender" name="gender" value={profileData.gender} onChange={handleChangeProfile} required>
+                id="gender"
+                name="gender"
+                value={profileData.gender}
+                onChange={handleChangeProfile}
+                required
+              >
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
@@ -1153,63 +1188,117 @@ function RestaurantPage({ login, setlogin }) {
 
               {/* dob */}
 
-              <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
-                htmlFor="dob">Date of Birth:</label>
-              <input className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
-                type="date" id="dob" name="dob" required onChange={handleChangeProfile} />
+              <label
+                className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                htmlFor="dob"
+              >
+                Date of Birth:
+              </label>
+              <input
+                className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
+                type="date"
+                id="dob"
+                name="dob"
+                required
+                onChange={handleChangeProfile}
+              />
 
               {/* Anniversary */}
 
-              <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
-                htmlFor="anniversary">Anniversary :</label>
-              <input className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
-                type="date" id="anniversary" name="anniversary" onChange={handleChangeProfile} />
+              <label
+                className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                htmlFor="anniversary"
+              >
+                Anniversary :
+              </label>
+              <input
+                className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
+                type="date"
+                id="anniversary"
+                name="anniversary"
+                onChange={handleChangeProfile}
+              />
 
               {/* email */}
 
-              <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
-                htmlFor="email">Email ID:</label>
-              <input className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
-                type="email" id="email" name="email" required onChange={handleChangeProfile} />
+              <label
+                className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                htmlFor="email"
+              >
+                Email ID:
+              </label>
+              <input
+                className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
+                type="email"
+                id="email"
+                name="email"
+                required
+                onChange={handleChangeProfile}
+              />
 
               {/* foodPreference */}
-              <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
-                htmlFor="foodPreference" >Food Preference:</label>
+              <label
+                className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                htmlFor="foodPreference"
+              >
+                Food Preference:
+              </label>
               <select
                 className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
-                id="foodPreference" name="foodPreference" value={profileData.foodPreference} onChange={handleChangeProfile} required>
+                id="foodPreference"
+                name="foodPreference"
+                value={profileData.foodPreference}
+                onChange={handleChangeProfile}
+                required
+              >
                 <option value="veg">Veg</option>
                 <option value="nonveg">NonVeg</option>
                 <option value="Both">Both</option>
               </select>
               {/* terms */}
               <div className="mb-[.5rem]">
-                <input type="checkbox" id="terms" name="terms" checked={profileData.terms} onChange={handleChangeProfile} required />
+                <input
+                  type="checkbox"
+                  id="terms"
+                  name="terms"
+                  checked={profileData.terms}
+                  onChange={handleChangeProfile}
+                  required
+                />
                 <label className="ml-[.5rem]" htmlFor="terms">
-                  I accept the terms and conditions</label>
+                  I accept the terms and conditions
+                </label>
               </div>
 
-              <button className="bg-[#EAB308] font-sen font-[500] px-6 py-3 rounded-md uppercase mb-[.5rem]" type="button" onClick={handleSubmitProfile}>Continue</button>
+              <button
+                className="bg-[#EAB308] font-sen font-[500] px-6 py-3 rounded-md uppercase mb-[.5rem]"
+                type="button"
+                onClick={handleSubmitProfile}
+              >
+                Continue
+              </button>
             </form>
           </div>
-        }
-
+        )}
       </div>
-
 
       {/* popup1 recommendation */}
 
       <div className="">
         {isOpen && userData && (
           <div>
-            <div className="absolute top-16 lg:left-[33%] md:left-[25%] sm:left-0 bg-white z-[100] ">
+            <div className="absolute top-[100px] lg:left-[33%] md:left-[25%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[50vw] sm:h-fit sm:w-[90%]">
                 <div className="head-pop text-xl font-bold text-slate-600 py-4 text-center">
                   Recommend this place to help other foodies
                 </div>
                 <div className="chow-div flex flex-row justify-center pb-4">
                   <div className="chow">
-                    <img src={restaurantData?.logo} className="h-16 w-16" alt="" />
+                    <img
+                      src={restaurantData?.logo}
+                      className="h-16 w-16"
+                      alt=""
+                    />
                   </div>
                   <div className="chow-text flex flex-col">
                     <div className="text1 px-4 text-xl font-bold">
@@ -1223,8 +1312,9 @@ function RestaurantPage({ login, setlogin }) {
                 <div className="chow-button flex flex-row justify-center gap-2">
                   <div className="btn-1  border-2 rounded-md ">
                     <button
-                      className={` flex px-4 py-2 ${isButtonClicked1 ? "bg-yellow-500 " : ""
-                        }`}
+                      className={` flex px-4 py-2 ${
+                        isButtonClicked1 ? "bg-yellow-500 " : ""
+                      }`}
                       onClick={handleRecommendClick}
                     >
                       <div className="-ml-2 py-1">
@@ -1235,9 +1325,12 @@ function RestaurantPage({ login, setlogin }) {
                   </div>
                   <div className="btn2   border-2 rounded-md ">
                     {" "}
-                    <button className={` flex px-4 py-2 ${isButtonClicked ? "bg-yellow-500 " : ""
+                    <button
+                      className={` flex px-4 py-2 ${
+                        isButtonClicked ? "bg-yellow-500 " : ""
                       }`}
-                      onClick={handleNotRecommendClick}>
+                      onClick={handleNotRecommendClick}
+                    >
                       <div className="-ml-1 py-1">
                         <GoThumbsdown />
                       </div>
@@ -1264,25 +1357,41 @@ function RestaurantPage({ login, setlogin }) {
 
                 <div className="map-img w-[88%] mx-auto pt-4 h-[350px] overflow-scroll no-scrollbar">
                   <div className="container flex flex-wrap justify-center gap-1">
-                    {allMenuItems && allMenuItems.map((data, index) => (
-                      <div key={data._id} className="p-2 border-2 w-fit rounded-xl relative shadow-lg flex flex-col items-center">
-                        {/* <img className="h-24 w-36" src={data.pic} alt="menu"></img> */}
-                        <img className="h-24 w-36" src={burger} alt="menu"></img>
-                        <div className="text-sm font-bold text-[#32343E]">{data.menuItem}</div>
-                        <div className="text-lg font-semibold text-[#020617] font-roboto">₹{data.price}</div>
-                        <div>
-                          <button
-                            className={`border-2 text-sm px-2 flex py-2 rounded-lg ${buttonStates[index] ? "bg-yellow-500" : ""}`}
-                            onClick={() => handleRecommendationsClick(data._id)}
-                          >
-                            <div className="">Recommend</div>
-                            <div className="ml-1 py-[2px]">
-                              <GoThumbsup className="" />
-                            </div>
-                          </button>
+                    {allMenuItems &&
+                      allMenuItems.map((data, index) => (
+                        <div
+                          key={data._id}
+                          className="p-2 border-2 w-fit rounded-xl relative shadow-lg flex flex-col items-center"
+                        >
+                          {/* <img className="h-24 w-36" src={data.pic} alt="menu"></img> */}
+                          <img
+                            className="h-24 w-36"
+                            src={burger}
+                            alt="menu"
+                          ></img>
+                          <div className="text-sm font-bold text-[#32343E]">
+                            {data.menuItem}
+                          </div>
+                          <div className="text-lg font-semibold text-[#020617] font-roboto">
+                            ₹{data.price}
+                          </div>
+                          <div>
+                            <button
+                              className={`border-2 text-sm px-2 flex py-2 rounded-lg ${
+                                buttonStates[index] ? "bg-yellow-500" : ""
+                              }`}
+                              onClick={() =>
+                                handleRecommendationsClick(data._id)
+                              }
+                            >
+                              <div className="">Recommend</div>
+                              <div className="ml-1 py-[2px]">
+                                <GoThumbsup className="" />
+                              </div>
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
                 <div className="con-butt py-4 mb-2 ">
@@ -1305,14 +1414,18 @@ function RestaurantPage({ login, setlogin }) {
       <div className="">
         {isOpen4 && userData && (
           <div>
-            <div className="absolute top-16 lg:left-[33%] md:left-[25%] sm:left-[2%] bg-white z-[100] ">
+            <div className="absolute top-[100px] lg:left-[33%] md:left-[25%] sm:left-[2%] bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[35vw] md:h-fit md:w-[50vw] sm:h-fit sm:w-[98vw]">
                 <div className="text-2xl text-slate-500 font-bold text-center py-4">
                   Available Offers
                 </div>
                 <div className="chow-div flex flex-row items-center justify-center border-y-2 py-2">
                   <div className="chow">
-                    <img src={restaurantData?.logo} className="h-12 w-12" alt="" />
+                    <img
+                      src={restaurantData?.logo}
+                      className="h-12 w-12"
+                      alt=""
+                    />
                   </div>
                   <div className="chow-text flex flex-col justify-center ">
                     <div className="text1  text-xl font-bold">
@@ -1392,14 +1505,18 @@ function RestaurantPage({ login, setlogin }) {
       <div>
         {isOpen1 && userData && (
           <div>
-            <div className="absolute top-16 lg:left-[33%] md:left-[22%] sm:left-0 bg-white z-[100] ">
+            <div className="absolute top-[100px] lg:left-[33%] md:left-[22%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[60vw] sm:h-[90%] sm:w-[99vw]">
                 <div className="hd-txt text-xl font-bold text-slate-600  text-center  py-4 ">
                   Book a Table
                 </div>
                 <div className="chow-div flex flex-row    border-y-2 py-4 justify-center">
                   <div className="chow">
-                    <img src={restaurantData?.logo} className="h-16 w-16" alt="" />
+                    <img
+                      src={restaurantData?.logo}
+                      className="h-16 w-16"
+                      alt=""
+                    />
                   </div>
                   <div className="chow-text flex flex-col">
                     <div className="text1 px-4 text-xl font-bold">
@@ -1420,13 +1537,16 @@ function RestaurantPage({ login, setlogin }) {
                       {weekDates.map((day) => (
                         <div
                           key={day.date}
-                          className={`calendar-day border-2 rounded-xl cursor-pointer py-2 ${selectedDate === day.fullDate ? 'border border-yellow-500' : 'bg-white'
-                            }`}
+                          className={`calendar-day border-2 rounded-xl cursor-pointer py-2 ${
+                            selectedDate === day.fullDate
+                              ? "border border-yellow-500"
+                              : "bg-white"
+                          }`}
                           // className="calendar-day border-2  rounded-xl py-2 cursor-pointer"
 
                           onClick={() => {
                             setDateSelected(day.fullDate);
-                            handleClick(day)
+                            handleClick(day);
                           }}
                         >
                           <div className="date px-7 cursor-pointer text-xs ">
@@ -1452,14 +1572,18 @@ function RestaurantPage({ login, setlogin }) {
                           //className="border-2 text-lg px-4 py-2 ml-1 rounded-lg cursor-pointer"
                           className={`
                           border-2 text-lg px-4 py-2 ml-1 rounded-lg cursor-pointer
-                          ${index == selectedHourIndex ? 'border border-yellow-500 ' : ''}
+                          ${
+                            index == selectedHourIndex
+                              ? "border border-yellow-500 "
+                              : ""
+                          }
                         `}
                           key={index}
                           style={style}
                           //onClick={handletime(hour.time)}
                           onClick={() => {
                             setTimeSelected(hour.time);
-                            handleTimeSelector(index)
+                            handleTimeSelector(index);
                           }}
                         >
                           {hour.time}
@@ -1476,12 +1600,16 @@ function RestaurantPage({ login, setlogin }) {
                         //className="px-6 text-xl font-bold border-2 rounded-lg ml-2 py-4 cursor-pointer hover:bg-gray-200  selectable"
                         className={`
                         px-6 text-xl font-bold border-2 rounded-lg ml-2 py-4 cursor-pointer
-                        ${number === selectedNumber ? 'border border-yellow-500' : ''}  // Conditional background color
+                        ${
+                          number === selectedNumber
+                            ? "border border-yellow-500"
+                            : ""
+                        }  // Conditional background color
                       `}
                         key={number}
                         onClick={() => {
                           setNumberSelected(number);
-                          handleNumberSelection(number)
+                          handleNumberSelection(number);
                         }}
                       >
                         {number}
@@ -1493,30 +1621,36 @@ function RestaurantPage({ login, setlogin }) {
                 <div className="flex flex-row pb-4 ">
                   <ul className="flex flex-row items-center px-6">
                     <li
-                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${isButtonClicked2 ? "border border-yellow-500 " : ""}`}
+                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${
+                        isButtonClicked2 ? "border border-yellow-500 " : ""
+                      }`}
                       onClick={() => {
                         setOccassion("Birthday");
-                        setIsButtonClicked2(!isButtonClicked2)
+                        setIsButtonClicked2(!isButtonClicked2);
                       }}
                     >
                       Birthday
                     </li>
                     <li
                       //className="border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer"
-                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${isButtonClicked3 ? "border border-yellow-500 " : ""}`}
+                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${
+                        isButtonClicked3 ? "border border-yellow-500 " : ""
+                      }`}
                       onClick={() => {
                         setOccassion("Anniversary");
-                        setIsButtonClicked3(!isButtonClicked3)
+                        setIsButtonClicked3(!isButtonClicked3);
                       }}
                     >
                       Anniversary
                     </li>
                     <li
                       // className="border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer"
-                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${isButtonClicked4 ? "border border-yellow-500 " : ""}`}
+                      className={`border-2 ml-3 px-4 py-4 rounded-lg cursor-pointer ${
+                        isButtonClicked4 ? "border border-yellow-500 " : ""
+                      }`}
                       onClick={() => {
                         setOccassion("Couple Date");
-                        setIsButtonClicked4(!isButtonClicked4)
+                        setIsButtonClicked4(!isButtonClicked4);
                       }}
                     >
                       Couple Date
@@ -1546,14 +1680,18 @@ function RestaurantPage({ login, setlogin }) {
       <div className="">
         {isOpen2 && userData && (
           <div>
-            <div className="absolute top-20 lg:left-[33%] md:left-[33%] sm:left-0 bg-white z-[100] ">
+            <div className="absolute top-[100px] lg:left-[33%] md:left-[33%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[44vw] sm:h-fit sm:w-[95%]">
                 <div className="payy text-2xl font-bold text-slate-600 px-28 py-4 text-center">
                   Pay Restaurant
                 </div>
                 <div className="chow-div flex flex-row px-8 py-2 border-t-2 border-b-2 mb-6 mt-3">
                   <div className="chow">
-                    <img src={restaurantData?.logo} className="h-16 w-16" alt="" />
+                    <img
+                      src={restaurantData?.logo}
+                      className="h-16 w-16"
+                      alt=""
+                    />
                   </div>
                   <div className="chow-text flex flex-col justify-center">
                     <div className="text1 px-4 text-xl font-bold">
@@ -1638,14 +1776,18 @@ function RestaurantPage({ login, setlogin }) {
       <div className="">
         {isOpen5 && userData && (
           <div>
-            <div className="absolute top-20 lg:left-[33%] md:left-[33%]   bg-white z-[100] ">
+            <div className="absolute top-[100px] lg:left-[33%] md:left-[33%]   bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[44vw] sm:h-fit sm:w-[90%]">
                 <div className="payy text-2xl font-bold text-slate-600 px-28 py-4 text-center">
                   Call Restaurant
                 </div>
                 <div className="chow-div flex justify-center flex-row border-y-2 py-2">
                   <div className="chow">
-                    <img src={restaurantData?.logo} className="h-16 w-16" alt="" />
+                    <img
+                      src={restaurantData?.logo}
+                      className="h-16 w-16"
+                      alt=""
+                    />
                   </div>
                   <div className="chow-text flex flex-col ">
                     <div className="text1 px-4 text-lg font-bold">
@@ -1732,14 +1874,18 @@ function RestaurantPage({ login, setlogin }) {
       <div className="">
         {isOpen6 && userData && (
           <div>
-            <div className="absolute top-20 lg:left-[33%] md:left-[33%] sm:left-0 bg-white z-[100] ">
+            <div className="absolute top-[100px] lg:left-[33%] md:left-[33%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[44vw] sm:h-fit sm:w-[95%]">
                 <div className="payy text-2xl font-bold text-slate-600  py-4 text-center">
                   Call Restaurant
                 </div>
                 <div className="chow-div flex flex-row justify-center border-y-2 py-2">
                   <div className="chow">
-                    <img src={restaurantData?.logo} className="h-16 w-16" alt="" />
+                    <img
+                      src={restaurantData?.logo}
+                      className="h-16 w-16"
+                      alt=""
+                    />
                   </div>
                   <div className="chow-text flex flex-col ">
                     <div className="text1  text-xl font-bold">
@@ -1856,11 +2002,11 @@ function RestaurantPage({ login, setlogin }) {
         )}
       </div>
 
-      <div className=" pt-16 w-[100vw]" id="background">
+      <div className=" pt-16 w-[100%]" id="background">
         {" "}
         <div className="Home">
-          <div className="home-img sm:h-[50vh] lg:h-[60vh] w-[100vw] relative">
-            <img className="w-[100vw] h-full" src={bg} alt="" />
+          <div className="home-img sm:h-[50vh] lg:h-[60vh] w-[100%] relative">
+            <img className="w-[100%] h-full" src={bg} alt="" />
             <img
               className=" absolute top-6 left-12 cursor-pointer lg:top-6 md:top-4  sm:top-4 sm:h-8"
               src={arrow}
@@ -2017,8 +2163,6 @@ function RestaurantPage({ login, setlogin }) {
         <RestaurantFooter restaurantData={restaurantData} />
       </div>
 
-
-
       {/* footer - small screen */}
       <div
         id="footer"
@@ -2051,9 +2195,8 @@ function RestaurantPage({ login, setlogin }) {
         </div>
         {/* <Footer1 /> */}
       </div>
-
     </div>
-  )
+  );
 }
 
 export default RestaurantPage;
