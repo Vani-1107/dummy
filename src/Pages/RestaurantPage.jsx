@@ -200,6 +200,7 @@ function RestaurantPage({ login, setlogin }) {
       });
       setMobile(false);
       setShowOTP(false);
+      setlogin(false);
 
       // finding if user exists
       let config = {
@@ -601,6 +602,11 @@ function RestaurantPage({ login, setlogin }) {
 
       setIsOpen(true);
     }
+    else{
+      document.documentElement.scrollTop = 0;
+      setlogin(true);
+      setMobile(true);
+    }
   };
 
   const closeModal = () => {
@@ -625,6 +631,11 @@ function RestaurantPage({ login, setlogin }) {
       document.getElementById("background").style.filter = "blur(10px)";
       document.documentElement.scrollTop = 0;
     }
+    else{
+      document.documentElement.scrollTop = 0;
+      setlogin(true);
+      setMobile(true);
+    }
   };
 
   const closeModal1 = () => {
@@ -643,6 +654,11 @@ function RestaurantPage({ login, setlogin }) {
       document.getElementById("background").style.filter = "blur(10px)";
       document.documentElement.scrollTop = 0;
     }
+    else{
+      document.documentElement.scrollTop = 0;
+      setlogin(true);
+      setMobile(true);
+    }
   };
 
   const closeModal2 = () => {
@@ -658,6 +674,11 @@ function RestaurantPage({ login, setlogin }) {
       setIsOpen4(true);
       document.getElementById("background").style.filter = "blur(10px)";
       document.documentElement.scrollTop = 0;
+    }
+    else{
+      document.documentElement.scrollTop = 0;
+      setlogin(true);
+      setMobile(true);
     }
   };
 
@@ -676,6 +697,11 @@ function RestaurantPage({ login, setlogin }) {
       document.getElementById("background").style.filter = "blur(10px)";
       document.documentElement.scrollTop = 0;
     }
+    else{
+      document.documentElement.scrollTop = 0;
+      setlogin(true);
+      setMobile(true);
+    }
   };
 
   const closeModal5 = () => {
@@ -690,6 +716,11 @@ function RestaurantPage({ login, setlogin }) {
       setIsOpen6(true);
       document.getElementById("background").style.filter = "blur(10px)";
       document.documentElement.scrollTop = 0;
+    }
+    else{
+      document.documentElement.scrollTop = 0;
+      setlogin(true);
+      setMobile(true);
     }
   };
 
@@ -996,16 +1027,15 @@ function RestaurantPage({ login, setlogin }) {
     }
   };
 
-
   return (
     <div>
       {/* login */}
-      <div className={`absolute w-full h-[90vh] top-[100px]`}>
+      <div className={`absolute w-full h-[95vh] top-[65px]`}>
         {
           login &&
           <div className="w-full">
             {/* blur */}
-            <div className='absolute z-[100] w-full h-[100vh] bg-[rgba(95,95,95,0.82)] '></div>
+            <div className='absolute top-0 z-[100] w-full h-[100vh] bg-[rgba(95,95,95,0.82)] '></div>
           </div>
         }
         {
