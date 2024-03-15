@@ -1,109 +1,106 @@
-import React, { useContext, useEffect } from 'react'
-import { useState } from 'react';
-import group117 from "../assets/group-117.svg"
-import rect54 from "../assets/rectangle54.png"
-import group752 from "../assets/group-752.svg"
-import { Link } from 'react-router-dom'
-import logo from "../assets/logo.png"
+import React, { useContext, useEffect } from "react";
+import { useState } from "react";
+import group117 from "../assets/group-117.svg";
+import rect54 from "../assets/rectangle54.png";
+import group752 from "../assets/group-752.svg";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 import { FaPenFancy } from "react-icons/fa";
-import { ImCross } from 'react-icons/im';
-import { restaurantContext } from '../context/restaurantContext';
+import { ImCross } from "react-icons/im";
+// import { restaurantContext } from "../context/restaurantContext";
 import { useToast } from "@chakra-ui/toast";
-import axios from "axios"
+import axios from "axios";
 
-import LeftBar from '../Components/LeftBar';
+import LeftBar from "../Components/LeftBar";
 
 const Menu = () => {
   const toast = useToast();
   // const { resId } = useContext(restaurantContext);
-
-  let resId = JSON.parse(localStorage.getItem("userData")).details;
-
   const [allMenuItem, setAllMenuItem] = useState([]);
+    let resId = JSON.parse(localStorage.getItem("userData")).details;
+
   const data = [
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
     {
-      "image": "/Rectangle 55187.png",
-      "menu": "Menu item name",
-      "amount": "₹231",
-      "para": "Lorem ipsum dolor sit amet, consectetur adipiscing el..."
+      image: "/Rectangle 55187.png",
+      menu: "Menu item name",
+      amount: "₹231",
+      para: "Lorem ipsum dolor sit amet, consectetur adipiscing el...",
     },
-  ]
+  ];
 
   function openPopup() {
-    document.getElementById('popup').style.display = "block";
-    document.getElementById('background').style.filter = "blur(2Px)";
-
+    document.getElementById("popup").style.display = "block";
+    document.getElementById("background").style.filter = "blur(2Px)";
   }
   function closePopup() {
-    document.getElementById('popup').style.display = "none";
-    document.getElementById('background').style.filter = "blur(0px)";
-
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("background").style.filter = "blur(0px)";
   }
   const [pic, setPic] = useState();
   const [Data, SetData] = useState();
@@ -112,7 +109,6 @@ const Menu = () => {
   const [formData, setFormData] = useState({
     menuItem: "",
     type: "",
-    price:"",
     cuisines: "",
   });
 
@@ -120,7 +116,7 @@ const Menu = () => {
     setFormData({
       menuItem: "",
       type: "",
-      cuisines: ""
+      cuisines: "",
     });
     setImage(null);
   }
@@ -130,7 +126,6 @@ const Menu = () => {
     SetData({ ...formData, pic });
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -138,16 +133,17 @@ const Menu = () => {
     let data = JSON.stringify(Data);
 
     let config = {
-      method: 'post',
+      method: "post",
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/menu/${resId}`,
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/menu/${resId}`,
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      data: data
+      data: data,
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
         toast({
@@ -175,13 +171,14 @@ const Menu = () => {
 
   const fetchMenu = async () => {
     let config = {
-      method: 'get',
+      method: "get",
       maxBodyLength: Infinity,
-      url: `http://localhost:4000/api/menu/${resId}`,
-      headers: {}
+      url: `https://coral-app-mvtxg.ondigitalocean.app/api/menu/${resId}`,
+      headers: {},
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
         setAllMenuItem(response.data);
@@ -190,11 +187,11 @@ const Menu = () => {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchMenu();
-  },[]);
+  }, []);
 
   const postDetails = async (pics) => {
     const formData = new FormData();
@@ -203,7 +200,7 @@ const Menu = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:4000/api/gallery",
+      url: "https://coral-app-mvtxg.ondigitalocean.app/api/gallery",
       // headers: {
       //   ...data.getHeaders(),
       // },
@@ -214,21 +211,17 @@ const Menu = () => {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
-        setPic(response.data.image_url)
-        console.log(pic)
+        setPic(response.data.image_url);
+        console.log(pic);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  let user = JSON.parse(localStorage.getItem("userData"));
-  console.log(user.username);
-
   return (
     <div className="w-full h-[100vh] flex flex-col">
       <div className="z-10 bg-white fixed   w-full h-20  flex flex-row items-center justify-between  px-6 box-border  max-w-full  text-zinc-700 font-sans">
-
         <div className="flex flex-row items-start left-1 py-0 px-6">
           <img
             className="relative w-28 h-16 object-cover z-20"
@@ -250,7 +243,8 @@ const Menu = () => {
               loading="lazy"
               alt=""
               src={group752}
-            /></Link>
+            />
+          </Link>
           <Link to="/profile">
             <div className="flex flex-row items-center justify-start gap-2">
               <img
@@ -261,10 +255,10 @@ const Menu = () => {
               />
               <div className="flex flex-col items-start justify-start gap-0.5">
                 <div className="relative tracking-[-0.02em] font-semibold whitespace-nowrap">
-                  {user.restaurantName}
+                  Adam Cooper
                 </div>
                 <div className="relative text-sm tracking-[-0.02em] whitespace-nowrap">
-                  {user.email}
+                  adamcooper@gmail.com
                 </div>
               </div>
             </div>
@@ -272,7 +266,8 @@ const Menu = () => {
         </div>
       </div>
       {/* popup */}
-      <div className="absolute top-28 left-[30%]  z-[100] shadow-inner hidden"
+      <div
+        className="absolute top-28 left-[30%]  z-[100] shadow-inner hidden"
         id="popup"
       >
         <div className="w-[40vw]   bg-white pb-8 rounded-md flex  ">
@@ -304,20 +299,24 @@ const Menu = () => {
                   onChange={handleChange}
                   required
                 />
-                <div className=''>Images</div>
+                <div className="">Images</div>
                 <div
                   className="input_container  "
-                // className="border-[#E2E8F0] rounded-md focus:outline-none focus:shadow-md"
+                  // className="border-[#E2E8F0] rounded-md focus:outline-none focus:shadow-md"
                 >
-                  <label className="mt-3 mb-2  " htmlFor="image">
+                  <label className="mt-4 mb-2  " htmlFor="image">
                     <span>
-                      {image ? <div className='text-center my-auto font-normal pt-8'>Uploaded {fileName}</div> :
+                      {image ? (
+                        <div className="text-center my-auto font-normal pt-8">
+                          Uploaded {fileName}
+                        </div>
+                      ) : (
                         <img
-                          className="absolute w-[130px] h-[80px] left-[37%] top-[20%] object-fill"
+                          className="absolute w-[130px] h-[80px] left-[37%] top-[24%] object-fill"
                           src="/Group 1171277298.png"
                           alt=""
                         ></img>
-                      }
+                      )}
                     </span>
                   </label>
 
@@ -328,10 +327,10 @@ const Menu = () => {
                     name="image"
                     accept="image/*"
                     onChange={(e) => {
-                      e.target.files[0] && setFileName(e.target.files[0].name)
+                      e.target.files[0] && setFileName(e.target.files[0].name);
                       if (e.target.files)
-                        setImage(URL.createObjectURL(e.target.files[0]))
-                      postDetails(e.target.files[0])
+                        setImage(URL.createObjectURL(e.target.files[0]));
+                      postDetails(e.target.files[0]);
                     }}
                     required
                   />
@@ -352,17 +351,6 @@ const Menu = () => {
                   <option value="veg">Veg</option>
                   <option value="non-veg">Non-Veg</option>
                 </select>
-                <label className="mt-4 mb-2" htmlFor="price">
-                  Price
-                </label>
-                <input
-                  className="w-full h-[50px] p-3 border border-[#E2E8F0] rounded-md focus:outline-none focus:shadow-md"
-                  type="text"
-                  id="price"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleChange}
-                />
                 <label className="mt-4 mb-2" htmlFor="calories">
                   Cuisines
                 </label>
@@ -389,21 +377,24 @@ const Menu = () => {
       <div className="flex  w-full mt-20 h-full " id="background">
         {/* left */}
         <div className="md:w-[20%] w-[10%]  bg-white flex flex-col fixed md:text-[1.15rem] text-[1.6rem] font-roboto  text-slate-600 ml-2">
-          <LeftBar/>
-         
+          <LeftBar />
         </div>
 
         {/* right */}
         <div className="md:w-[75%] w-[85%] bg-slate-200  h-fit rounded-md p-6 md:ml-[22%] ml-[12%]">
           <h1 className="text-[1.4rem] font-bold w-[40%] ml-4 ">Menu</h1>
           <div className="flex justify-between relative mt-2">
-
-            <div className='mt-2 flex gap-1'>
-              <button className='bg-black text-white rounded-full py-2 px-6'>Menu</button>
-              <button className='rounded-full ml-4 bg-white py-2 px-4'>Analytics</button>
-
+            <div className="mt-2 flex gap-1">
+              <button className="bg-black text-white rounded-full py-2 px-6">
+                Menu
+              </button>
+              <button className="rounded-full ml-4 bg-white py-2 px-4">
+                Analytics
+              </button>
             </div>
-            <p className=' absolute rounded-full bg-yellow-500 size-fit px-4 ml-44 mb-2 '>Pro</p>
+            <p className=" absolute rounded-full bg-yellow-500 size-fit px-4 ml-44 mb-2 ">
+              Pro
+            </p>
             <button
               onClick={openPopup}
               className="w-[150px] text-white font-semibold bg-yellow-500 h-10 rounded-md"
@@ -420,7 +411,8 @@ const Menu = () => {
               >
                 <img
                   className="w-full h-[170px] object-cover rounded-t-lg"
-                  src={item.pic} width={200}
+                  src={item.pic}
+                  width={200}
                   alt="img"
                 ></img>
                 <button className="absolute mt-2 ml-2 font-normal text-[1.2rem] bg-yellow-500 text-white rounded-2xl px-4">
@@ -430,7 +422,9 @@ const Menu = () => {
                   <FaPenFancy />
                 </button>
                 <div className="flex items-center mt-1 ml-4">
-                  <h1 className="md:text-[1.2rem] text-[1.1rem] font-semibold">{item.menuItem}</h1>
+                  <h1 className="md:text-[1.2rem] text-[1.1rem] font-semibold">
+                    {item.menuItem}
+                  </h1>
                   {/* <h1 className="text-[1.2rem] font-semibold mr-2">
                     {item.amount}
                   </h1> */}
@@ -442,6 +436,6 @@ const Menu = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Menu
+export default Menu;

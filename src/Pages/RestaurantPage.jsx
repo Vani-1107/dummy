@@ -1160,7 +1160,7 @@ function RestaurantPage({ login, setlogin }) {
       {/* popup1 recommendation */}
 
       <div className="">
-        {isOpen && (
+        {isOpen && login && (
           <div>
             <div className="absolute top-16 lg:left-[33%] md:left-[25%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[50vw] sm:h-fit sm:w-[90%]">
@@ -1263,7 +1263,7 @@ function RestaurantPage({ login, setlogin }) {
 
       {/* available offer popup */}
       <div className="">
-        {isOpen4 && (
+        {isOpen4 && login &&  (
           <div>
             <div className="absolute top-16 lg:left-[33%] md:left-[25%] sm:left-[2%] bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[35vw] md:h-fit md:w-[50vw] sm:h-fit sm:w-[98vw]">
@@ -1350,7 +1350,7 @@ function RestaurantPage({ login, setlogin }) {
 
       {/* book a table */}
       <div>
-        {isOpen1 && (
+        {isOpen1 && login && (
           <div>
             <div className="absolute top-16 lg:left-[33%] md:left-[22%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[60vw] sm:h-[90%] sm:w-[99vw]">
@@ -1504,7 +1504,7 @@ function RestaurantPage({ login, setlogin }) {
 
       {/* pay a bill popup */}
       <div className="">
-        {isOpen2 && (
+        {isOpen2 && login &&(
           <div>
             <div className="absolute top-20 lg:left-[33%] md:left-[33%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[44vw] sm:h-fit sm:w-[95%]">
@@ -1596,7 +1596,7 @@ function RestaurantPage({ login, setlogin }) {
        paymentsuccesful popup */}
 
       <div className="">
-        {isOpen5 && (
+        {isOpen5 && login && (
           <div>
             <div className="absolute top-20 lg:left-[33%] md:left-[33%]   bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[44vw] sm:h-fit sm:w-[90%]">
@@ -1690,7 +1690,7 @@ function RestaurantPage({ login, setlogin }) {
 
       {/* popup failed */}
       <div className="">
-        {isOpen6 && (
+        {isOpen6 && login && (
           <div>
             <div className="absolute top-20 lg:left-[33%] md:left-[33%] sm:left-0 bg-white z-[100] ">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[44vw] sm:h-fit sm:w-[95%]">
@@ -1745,7 +1745,7 @@ function RestaurantPage({ login, setlogin }) {
 
       {/* share popup */}
       <div>
-        {isOpen7 && (
+        {isOpen7 &&  (
           <div>
             <div className="absolute lg:h-fit top-28 lg:left-[38%] md:left-[22%] sm:left-0 bg-white z-[100] md:h-fit rounded-lg sm:h-[100vw]">
               <div className="pop-up lg:h-fit lg:w-[30vw] md:h-fit md:w-[58vw] sm:h-fit sm:w-[95%]">
