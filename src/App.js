@@ -79,11 +79,8 @@ function App() {
     <div className="app">
       {/* <Navbar /> */}
       <restaurantContext.Provider value={{ resId, setResId }}>
-        {!excludedPaths.includes(location.pathname) && (
-          
-            user?(<Navbar1/>): (< Navbar login={login} setlogin={setlogin}/>)
-        
-        )}
+        {!excludedPaths.some((path) => location.pathname.startsWith(path)) &&
+          (user ? <Navbar1 /> : <Navbar login={login} setlogin={setlogin} />)}
 
         {/* {!excludedPaths.includes(location.pathname) && (
           <Navbar login={login} setlogin={setlogin} />
