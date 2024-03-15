@@ -1,5 +1,5 @@
 import React from "react";
-// import burger from "../assets/burger.png";
+import burger from "../assets/burger.png";
 import rec from "../assets/recommend.png";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -56,45 +56,59 @@ function RestaurantMenu({restaurantData}) {
             <div className="menu-img  ">
                 <div className="flex gap-6 flex-wrap">
                     {allMenuItem && allMenuItem.map((item, index) => (
-                        <div key={index} className="relative mt-24">
+                        <div key={index} className="relative mt-24 flex justify-center items-center">
                             <img
                                 src={item.pic}
                                 alt="Image description"
-                                className="w-26 h-24 absolute -top-20 left-3"
+                                className="w-26 h-24 absolute -top-20 "
                             />
+                            {/* <img
+                                src={burger}
+                                alt="Image description"
+                                className="w-26 h-24 absolute -top-20  "
+                            /> */}
                             <div className="p-4 rounded-xl shadow-lg overflow-hidden w-fit">
                                 <p className="text-lg font-medium pt-3 text-center">{item.menuItem}</p>
-                                {price.map((text, index) => (
-                                    <div
-                                        key={index}
-                                        className=" px-2 py-2 cursor-pointer font-bold ml-8"
-                                    >
-                                        {text}
-                                    </div>
-                                ))}
+                                <div className=" px-2 py-2 cursor-pointer font-bold justify-center flex">
+                                    ₹ {item.price}
+                                </div>
 
                                 <div className="div-rec">
                                     <div className="">
-                                        {recommend.map((item, index) => (
+                                        {/* {item.users.map((item, index) => (
                                             <div
                                                 key={index}
-                                                className="flex flex-row justify-centre ml-4"
+                                                className="flex flex-row justify-center mx-4"
                                             >
                                                 <img
-                                                    src={item.image}
+                                                    src={rec}
                                                     alt="Image description"
                                                     className="w-12 h-6 "
                                                 />
                                                 <div className="">
-                                                    <p className="text-lg font-medium text-slate-500">
+                                                    <p className="text-lg font-medium text-slate-500 justify-center ">
                                                         {item.text}
                                                     </p>
                                                 </div>
                                             </div>
-                                        ))}
+                                        ))} */}
+                                        <div
+                                            className="flex flex-row justify-center mx-4"
+                                        >
+                                            <img
+                                                src={rec}
+                                                alt=""
+                                                className="w-12 h-6 "
+                                            />
+                                            <div className="">
+                                                <p className="text-lg font-medium text-slate-500 justify-center ">
+                                                    {item.users.length}+
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div key={index} className="text-slate-500">
+                                <div key={index} className="text-slate-500 text-center">
                                     Recommendations
                                 </div>
 
