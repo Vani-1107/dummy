@@ -4,8 +4,10 @@ import p2 from "../assets/p2.png";
 import p3 from "../assets/p3.png";
 import axios from "axios";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function RestaurantPhotos({restaurantData}) {
+    const {id} = useParams();
     const [pics, setPics] = useState([]);
 
     const photo = [
@@ -19,7 +21,7 @@ function RestaurantPhotos({restaurantData}) {
         let config = {
             method: "get",
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/gallery/${restaurantData._id}`,
+            url: `http://localhost:4000/api/gallery/${id}`,
             headers: {},
         };
 

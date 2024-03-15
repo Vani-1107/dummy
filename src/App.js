@@ -136,7 +136,8 @@ function App() {
           <Route path="/admin/appControl" element={<AdminAppControl />}></Route>
           <Route path="/admin/admincontrol" element={<AdminControl />}></Route>
 
-          <Route path="user/restaurant/:id" element={<RestaurantPage />}></Route>
+          <Route path="user/restaurant/:id" element={<RestaurantPage login={login}
+                setlogin={setlogin}/>}></Route>
           {/* </Switch> */}
         </Routes>
       </restaurantContext.Provider>

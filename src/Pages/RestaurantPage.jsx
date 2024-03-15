@@ -33,6 +33,16 @@ import RestaurantFooter from "../Components/RestaurantFooter";
 import RestaurantMenu from "../Components/RestaurantMenu";
 import RestaurantPhotos from "../Components/RestaurantPhotos";
 import { useParams } from "react-router-dom";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import OtpInput from "otp-input-react";
+import PhoneInput from 'react-phone-input-2';
+import "react-phone-input-2/lib/style.css";
+import { auth } from "../firebase.config";
+import { IoClose } from "react-icons/io5";
+import { FaEdit } from 'react-icons/fa';
+
+
 const datanew = [
   {
     id: 1,
@@ -78,19 +88,51 @@ const images = [
 ];
 
 
-function RestaurantPage() {
+function RestaurantPage({ login, setlogin }) {
+  const { id } = useParams();
+
+  const [pic, setPic] = useState('');
+  const [otp, setOtp] = useState("");
+  const [ph, setPh] = useState("");
+  // const [loading, setLoading] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
+  const [user, setUser] = useState(null);
+  const [mobile, setMobile] = useState(true);
+  const [password, setPassword] = useState(false);
+  const [profile, setProfile] = useState(false);
+    //current date
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let currentDate = `${day}-${month}-${year}`;
+  
+    const [profileData, setProfileData] = useState({
+      profileImage: 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1709387339~exp=1709390939~hmac=2bbe2e46b4676e1e7592d5557de6c4768adbf2da781cd9c59e6660fd2b1dbba3&w=740',
+      fullName: 'user',
+      gender: 'male',
+      dob: currentDate,
+      email: 'abc@gmail.com',
+      foodPreference: 'veg',
+      anniversary: '',
+      terms: false,
+    });
+
+
+  
   const [allMenuItems, setAllMenuItems] = useState();
   const [discount, setDiscount] = useState(0);
   const [restaurantData, setRestaurantData] = useState();
   // const [userId, setUserId] = useState();
 
-  const { id } = useParams();
+  
   console.log("res id  : ", id);
 
   // const [user, setUser] = useState();
 
   const userData = JSON.parse(localStorage.getItem("user"));
-  const userId = userData.id;
+  const userId = userData?.id;
   console.log(userData);
   // setUser(userData);
   // setUserId(userData._id);
@@ -120,6 +162,201 @@ function RestaurantPage() {
   }, []);
 
   const toast = useToast();
+  //login
+  const navigate = useNavigate();
+  const handleChangeProfile = (e) => {
+    const { name, value, type, checked, files } = e.target;
+
+    setProfileData((prevProfileData) => ({
+      ...prevProfileData,
+      [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
+    }));
+  };
+
+  const onSignup = async () => {
+    console.log("inside onsignup");
+    try {
+      const recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", {});
+      const formatPh = "+" + ph;
+      const confirmation = await signInWithPhoneNumber(auth, formatPh, recaptcha);
+      console.log(confirmation);
+      setUser(confirmation);
+      // setMobile(false);
+      setShowOTP(true);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  const onOTPVerify = async () => {
+    // setLoading(true);
+    try {
+      await user.confirm(otp);
+      toast({
+        title: "OTP verified",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+      setMobile(false);
+      setShowOTP(false);
+
+      // finding if user exists
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: `http://localhost:4000/api/user/search?search=${ph}`,
+        headers: {}
+      };
+
+      axios.request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+
+          if (response.data.length != 0) {
+            // if user exists
+            console.log("inside if user exists");
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                id: response.data[0]?._id,
+                name: response.data[0]?.additionalDetails?.fullName,
+                image: response.data[0]?.additionalDetails?.image,
+                phone: response.data[0]?.contactNumber
+              })
+            );
+            console.log(JSON.stringify({
+              id: response.data[0]?._id,
+              name: response.data[0]?.additionalDetails?.fullName,
+              image: response.data[0]?.additionalDetails?.image,
+              phone: response.data[0]?.contactNumber
+            }));
+            // navigate('/home');
+          }
+          else {
+            //create user profile
+            formData.ph = ph;
+            console.log(formData);
+            const data = JSON.stringify(formData);
+            console.log(data);
+            let config1 = {
+              method: 'post',
+              maxBodyLength: Infinity,
+              url: 'http://localhost:4000/api/user/create',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              data: data
+            };
+
+            axios.request(config1)
+              .then((response) => {
+                console.log(JSON.stringify(response.data));
+
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+            setProfile(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  //handle only the mobile number submit
+  const handleSubmitMobileNumber = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here with formData
+    console.log('Form Data:', formData);
+    setMobile(false);
+    setPassword(true);
+  };
+
+  //handle naviagate to profile and add move to home
+  const handleSubmitProfile = async (e) => {
+    e.preventDefault();
+    console.log('Profile data :', profileData);
+
+    //posting data
+    const data = JSON.stringify(profileData);
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: `http://localhost:4000/api/user/profile/create?search=${ph}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        localStorage.setItem(
+                "user",
+                JSON.stringify({
+                  id: response.data?._id,
+                  name: response.data?.additionalDetails?.fullName,
+                  image: response.data?.additionalDetails?.image,
+                  phone: response.data?.contactNumber
+                })
+              );
+
+              console.log(JSON.stringify({
+                id: response.data?._id,
+                name: response.data?.additionalDetails?.fullName,
+                image: response.data?.additionalDetails?.image,
+                phone: response.data?.contactNumber
+              }));
+
+        //navigate to home 
+        // navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    setMobile(false);
+    setPassword(false);
+    setProfile(false);
+    setlogin(false);
+  };
+
+  const postDetails = async (pics) => {
+    const formData = new FormData();
+    formData.append("someExpressFiles", pics);
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://localhost:4000/api/gallery",
+      data: formData,
+    };
+
+    await axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        console.log(response?.data?.image_url);
+        setPic(response?.data?.image_url);
+        profileData.profileImage = response.data.image_url;
+        console.log(pic);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
+
   //recommendations
   
 
@@ -703,7 +940,7 @@ function RestaurantPage() {
     if (isOpen) {
       fetchMenu();
     }
-  }, [isOpen]);
+  }, [isOpen]);    
 
   const [buttonStates, setButtonStates] = useState([]);
 
@@ -752,6 +989,174 @@ function RestaurantPage() {
 
   return (
     <div>
+      {/* login */}
+      <div className={`absolute w-full h-[90vh] top-[100px]`}>
+        {
+          login &&
+          <div className="w-full">
+            {/* blur */}
+            <div className='absolute z-[100] w-full h-[100vh] bg-[rgba(95,95,95,0.82)] '></div>
+          </div>
+        }
+        {
+          login && mobile &&
+          <div className="w-full">
+            <div className="z-[200] max-w-[380px] w-[100%]  p-5  rounded-md flex flex-col  bg-white absolute top-[25%] left-[50%] z translate-x-[-50%] translate-y-[-50%] ">
+              <div className="flex justify-between">
+                <p className="font-[600] font-sans text-[1.8rem]">Login Or SignUp</p>
+                <IoClose className="text-[1.4rem] cursor-pointer"
+                  onClick={() => {
+                    setlogin(prev => !prev);
+                    setMobile(true)
+                    setPassword(false)
+                  }} />
+              </div>
+              <p className="font-[400] font-sans text-[.9rem] text-gray-400 mb-[.5rem]">Enter Mobile Number</p>
+              <div className="relative w-full flex flex-col mx-auto">
+                {/* mobileNo */}
+                <PhoneInput country={"in"} value={ph} onChange={setPh} />
+                <button className="bg-[#EAB308] font-sen font-[500] px-6 py-3 rounded-md uppercase mb-[.5rem] mt-4" onClick={onSignup}>Continue</button>
+              </div>
+              <div id="recaptcha-container"></div>
+            </div>
+          </div>
+        }
+        {
+          login && showOTP &&
+          <div className="z-[200] max-w-[380px] w-[100%] p-5 rounded-md flex flex-col bg-white absolute top-[70%] left-[50%] z translate-x-[-50%] translate-y-[-50%] ">
+            <div className="flex justify-between">
+              <p className="font-[600] font-sans text-[1.8rem]">Enter OTP</p>
+              <IoClose className="text-[1.4rem] cursor-pointer"
+                onClick={() => {
+                  setlogin(prev => !prev);
+                  setMobile(true)
+                  setPassword(false)
+                }} />
+            </div>
+            <p className="font-[400] font-sans text-[.9rem] text-gray-400 mb-[.5rem]">An OTP has been sent to +91 {ph}</p>
+            <OtpInput
+              value={otp}
+              onChange={setOtp}
+              OTPLength={6}
+              otpType="number"
+              disabled={false}
+              autoFocus
+              className="opt-container mb-3"
+            ></OtpInput>
+
+            <button className="bg-[#EAB308] font-sen font-[500] px-6 py-3 rounded-md uppercase mb-[.5rem]"
+              onClick={onOTPVerify}
+            >Verify</button>
+            <p className=" capitalize">Didn't recieve code? <span className=" cursor-pointer text-[#EAB308]" onClick={handleSubmitMobileNumber}>Resend Code</span></p>
+          </div>
+        }
+        {
+          login && profile &&
+          <div className="z-[200] max-w-[400px] w-[100%]  p-5  rounded-md flex flex-col  bg-white absolute top-[50%] left-[50%] z translate-x-[-50%] translate-y-[-50%] ">
+
+            <p className="font-[600] font-sans text-[1.8rem]">Create Profile</p>
+
+            {/* form */}
+            <form className="flex flex-col">
+              {/* image */}
+
+              <label htmlFor="profileImage" className="relative inline-block w-20 h-20 overflow-hidden bg-gray-300 rounded-full cursor-pointer">
+                {profileData.profileImage ? (
+                  <div className="">
+                    <img src={profileData.profileImage} alt="Profile" className="object-cover w-full h-full" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                      <FaEdit size={20} className=" text-white" /> {/* Edit icon */}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center h-full">
+                    <span className="text-gray-600">Upload</span>
+                  </div>
+                )}
+                <input
+                  type="file"
+                  id="profileImage"
+                  name="profileImage"
+                  accept="image/*"
+                  required
+                  className="absolute inset-0 opacity-0"
+                  onChange={({ target: { files } }) => {
+                    // if (files)
+                    //     setImage(URL.createObjectURL(files[0]))
+                    postDetails(files[0]);
+                    // handleChangeProfile(files);
+                    // handleImagePreview(files);
+                  }
+                  }
+                />
+              </label>
+
+
+
+              {/* fullName */}
+              <div className="relative w-full flex flex-col">
+                <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]" htmlFor="fullName">Full Name:</label>
+                <input
+                  className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
+                  type="text" id="fullName" name="fullName" required onChange={handleChangeProfile} />
+              </div>
+              {/* gender */}
+              <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                htmlFor="gender">Gender:</label>
+              <select
+                className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
+                id="gender" name="gender" value={profileData.gender} onChange={handleChangeProfile} required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+
+              {/* dob */}
+
+              <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                htmlFor="dob">Date of Birth:</label>
+              <input className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
+                type="date" id="dob" name="dob" required onChange={handleChangeProfile} />
+
+              {/* Anniversary */}
+
+              <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                htmlFor="anniversary">Anniversary :</label>
+              <input className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
+                type="date" id="anniversary" name="anniversary" onChange={handleChangeProfile} />
+
+              {/* email */}
+
+              <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                htmlFor="email">Email ID:</label>
+              <input className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
+                type="email" id="email" name="email" required onChange={handleChangeProfile} />
+
+              {/* foodPreference */}
+              <label className="bg-white inline px-[1rem] w-fit h-fit relative top-[10px] left-[15px]"
+                htmlFor="foodPreference" >Food Preference:</label>
+              <select
+                className="border-2 border-[#EAB308] bg-white h-[3rem] rounded-md px-1 mb-[.5rem]"
+                id="foodPreference" name="foodPreference" value={profileData.foodPreference} onChange={handleChangeProfile} required>
+                <option value="veg">Veg</option>
+                <option value="nonveg">NonVeg</option>
+                <option value="Both">Both</option>
+              </select>
+              {/* terms */}
+              <div className="mb-[.5rem]">
+                <input type="checkbox" id="terms" name="terms" checked={profileData.terms} onChange={handleChangeProfile} required />
+                <label className="ml-[.5rem]" htmlFor="terms">
+                  I accept the terms and conditions</label>
+              </div>
+
+              <button className="bg-[#EAB308] font-sen font-[500] px-6 py-3 rounded-md uppercase mb-[.5rem]" type="button" onClick={handleSubmitProfile}>Continue</button>
+            </form>
+          </div>
+        }
+
+      </div>
+
+
       {/* popup1 recommendation */}
 
       <div className="">
@@ -865,9 +1270,9 @@ function RestaurantPage() {
                 <div className="text-2xl text-slate-500 font-bold text-center py-4">
                   Available Offers
                 </div>
-                <div className="chow-div flex flex-row  justify-center border-y-2 py-2">
+                <div className="chow-div flex flex-row items-center justify-center border-y-2 py-2">
                   <div className="chow">
-                    <img src={restaurantData?.logo} className="h-18 w-18" alt="" />
+                    <img src={restaurantData?.logo} className="h-12 w-12" alt="" />
                   </div>
                   <div className="chow-text flex flex-col justify-center ">
                     <div className="text1  text-xl font-bold">
@@ -1411,11 +1816,11 @@ function RestaurantPage() {
         )}
       </div>
 
-      <div className=" pt-16" id="background">
+      <div className=" pt-16 w-[100vw]" id="background">
         {" "}
-        <div className="Home  ">
+        <div className="Home">
           <div className="home-img sm:h-[50vh] lg:h-[60vh] w-[100vw] relative">
-            <img className="w-[100vw] h-full" src={bg} alt="" />
+            <img className="w-[100vw] h-full" src={bg} alt=""/>
             <img
               className=" absolute top-6 left-12 cursor-pointer lg:top-6 md:top-4  sm:top-4 sm:h-8"
               src={arrow}
@@ -1471,7 +1876,7 @@ function RestaurantPage() {
             {/* <Slider images={images} /> */}
             <div className="slider-container w-[50vw]  relative lg:-left-16 md:hidden lg:flex sm:hidden ">
               <img
-                src={pics[currentSlide].image}
+                src={pics[currentSlide]?.image}
                 alt="image"
                 className="slider-image h-[50vh] w-[50vw] object-cover rounded-lg shadow-md relative  "
               />
@@ -1518,8 +1923,8 @@ function RestaurantPage() {
           </div>
 
           {/* lg-button page */}
-          <div className="flex flex-col py-2 px-20 my-24  md:hidden lg:block sm:hidden lg:py-4">
-            <div className="button-div  bottom-2 h-fit w-[30vw] items-center lg:-left-24 relative md:-left-36 md:w-[36vw]">
+          <div className="flex flex-col py-2 px-20 my-24  md:hidden lg:block sm:hidden lg:py-4 ">
+            <div className="button-div bottom-2 h-fit w-[30vw] items-center lg:-left-24 relative md:-left-36 md:w-[36vw]">
               <div className="button1">
                 <button
                   className="h-16 text-md w-full border-2 rounded-lg mb-8 text-xl flex justify-between py-2 "
@@ -1541,12 +1946,7 @@ function RestaurantPage() {
                   <img className=" px-6 py-2 h-10 mt-2" src={arrow1} alt="" />
                 </button>
               </div>
-              {/* <Modal
-                  isOpen={isOpen4}
-                  onRequestClose={closeModal4}
-                  contentLabel="Example Modal"
-                  className={modalClasses}
-                > */}
+              
               <div className="offers"></div>
               <div className="button3 ">
                 <button
@@ -1571,12 +1971,13 @@ function RestaurantPage() {
             </div>
           </div>
         </div>
+        <RestaurantAbout restaurantData={restaurantData}/>
+        <RestaurantPhotos  restaurantData={restaurantData}/>
+        <RestaurantMenu restaurantData={restaurantData}/>
+        <RestaurantFooter restaurantData={restaurantData}/>
       </div>
 
-      <RestaurantAbout restaurantData={restaurantData}/>
-      <RestaurantPhotos  restaurantData={restaurantData}/>
-      <RestaurantMenu restaurantData={restaurantData}/>
-      <RestaurantFooter restaurantData={restaurantData}/>
+      
 
       {/* footer - small screen */}
       <div

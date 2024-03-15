@@ -3,20 +3,21 @@ import React from "react";
 import rec from "../assets/recommend.png";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 const texts = ["All", "Starter", "Burgers", "Momos", "Desserts"];
 
 const price = ["₹240"];
 const recommend = [{ image: rec, text: "1000+" }];
 
 function RestaurantMenu({restaurantData}) {
-
+    const { id } = useParams();
     const [allMenuItem, setAllMenuItem] = useState();
 
     const fetchMenu = async () => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://localhost:4000/api/menu/${restaurantData._id}`,
+            url: `http://localhost:4000/api/menu/${id}`,
             headers: {}
         };
 

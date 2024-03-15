@@ -151,21 +151,6 @@ const Homepage = ({ login, setlogin, onScrollChange }) => {
     }));
   };
 
-  // const handleImagePreview = (e) => {
-  //   const file = e.target.files[0];
-
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setProfileData((prevProfileData) => ({
-  //         ...prevProfileData,
-  //         profileImage: reader.result,
-  //       }));
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
   const onSignup = async () => {
     console.log("inside onsignup");
     try {

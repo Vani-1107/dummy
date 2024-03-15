@@ -344,8 +344,8 @@ function RestaurantAbout({restaurantData}) {
                 )}
             </div>
 
-            <div id="about w-full">
-                <div className="about-page h-fit  py-4 ">
+            <div id="about" className=" w-[100vw]">
+                <div className="about-page w-full h-fit  py-4 ">
                     <div className="heading text-slate-600 lg:text-3xl font-bold w-[90%] mx-auto  md:text-2xl  md:-py-12  pb-8 ">
                         About The Place
                     </div>
